@@ -1,13 +1,13 @@
 #pragma once
-#include "Role.hpp"
+#include "Role.h"
 
 
-class Governor : public Role {
+class Baron : public Role {
 
     public:
     
         std::string name() const override {
-            return "Governor";
+            return "Baron";
         }
 
         void ability (Game& game, Player& self) override;

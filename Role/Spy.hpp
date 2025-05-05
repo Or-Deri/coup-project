@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-class Spy : public Role{
+class Spy : public Role {
 
     public:
     
