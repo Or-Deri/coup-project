@@ -1,8 +1,8 @@
 #pragma once
-#include "Role.h"
+#include "Player.hpp"
 
 
-class Baron : public Role {
+class Baron : public Player{
 
     public:
     

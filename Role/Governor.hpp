@@ -1,8 +1,8 @@
 #pragma once
-#include "Role.h"
+#include "Player.hpp"
 
 
-class Governor : public Role {
+class Governor : public Player {
 
     public:
     

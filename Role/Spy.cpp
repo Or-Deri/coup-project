@@ -1,6 +1,6 @@
-#include "Spy.h"
-#include "Player.h"
-#include "Game.h"
+#include "Spy.hpp"
+#include "Player.hpp"
+#include "Game.hpp"
 
 
 void Spy::ability (Game& game, Player& self, Player* target){

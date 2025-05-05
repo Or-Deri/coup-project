@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
+#include "Player.hpp"
 
-class Spy : public Role {
+
+class Spy : public Player {
 
     public:
     
