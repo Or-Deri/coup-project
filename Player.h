@@ -8,15 +8,18 @@ class Player {
         int coins;
         std::string name;
         bool inGame:
+        Game::game*;
     public:
 
-        std::string getName const;
-        int getCoins const;
+        Player(Game& game, const std::string& name);
+
+        std::string getName() const;
+        int getCoins() const;
         void addCoins(int x);
         void subCoins(int x);
         
-        bool isInGame const;
-        void lost;
+        bool isInGame() const;
+        void lost();
 
 
     

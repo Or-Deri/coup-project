@@ -1,6 +1,10 @@
 
 class Player{
-    
+
+    Player::Player (Game* game , const std::string& name){
+        this.game = game;
+        this.name = name; 
+    }
 
 
 
