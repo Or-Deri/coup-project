@@ -5,13 +5,18 @@
 class Player {
     
     private:
-        int conis;
+        int coins;
         std::string name;
         bool inGame:
     public:
 
-
-        bool isInGame:
+        std::string getName const;
+        int getCoins const;
+        void addCoins(int x);
+        void subCoins(int x);
+        
+        bool isInGame const;
+        void lost;
 
 
     
