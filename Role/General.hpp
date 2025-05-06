@@ -10,6 +10,7 @@ namespace coup {
     
     public:
         General(Game& game, const std::string& name);
+        void startTurn() override;
         bool isCoupUndo() const;
         void setUndo(bool x);
         void undoCoup(Player& target); 

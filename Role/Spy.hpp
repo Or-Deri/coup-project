@@ -10,8 +10,8 @@ class Spy : public Player {
         std::string name() const override{
             return "Spy";
         }
-
-        void ability (Game& game, Player& self, Player* target)override;    
+        void startTurn() override;
+        
 
         
 }

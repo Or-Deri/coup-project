@@ -8,6 +8,7 @@ namespace coup {
         this.game = game;
         this.name = name;
     }
+    void startTurn(){}
 
     void General::undoCoup(){
         if (this.getCoins < 5){

@@ -31,6 +31,7 @@ class Player{
         this.inGame = false;
     }
 
+    void startTurn(){}
 
     void coup::gather(){
 

@@ -8,6 +8,12 @@ namespace coup {
         this.name = name;
     }
 
+    void startTurn(){
+        if(this.getCoins >= 3){
+            this.addCoins(1);
+        }
+    }
+
     void GiveBonus(){ // צריך לתת רק שיש לפחות 3 מטבעות
         if(this.getCoins >= 3){
             this.addCoins(1);

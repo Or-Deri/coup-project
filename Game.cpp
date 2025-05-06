@@ -22,7 +22,7 @@ namespace coup {
 
     void Game::nextTurn(){
         int current = PlayerTurn;
-        PlayerTurn = (Turn + 1) % Players.size();
+        PlayerTurn = (PlayerTurn + 1) % Players.size();
 
         while(!Players[currentPlayer].isInGame){
 
@@ -32,6 +32,8 @@ namespace coup {
                 throw std::runtime_error("No active players");
             }
         }
+
+        PlayersList[PlayerTurn]->startTurn();
     }
 
     void turn() const{

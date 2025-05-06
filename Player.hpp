@@ -23,6 +23,7 @@ namespace coup {
             
             bool isInGame() const;
             void lost();
+            virtual void startTurn();
 
 
             void gather();
