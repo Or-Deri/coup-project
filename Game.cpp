@@ -1,31 +1,86 @@
 #include "Game.hpp"
 #include "Player.hpp"
 
+namespace coup {
 
-Game::Game(){
+    Game::Game(){
+        PlayerTurn = 0;
+    }
 
-    Turn = 0;
-}
-
-void Game::addPlayer(Player* p){
-    Players.push_back(p);
-}
-
-Player* Game:: currentPlayer(){
-    return Players[Turn];
-}
-
-void Game::nextTurn(){
-    int current = Turn;
-    Turn = (Turn + 1) % Players.size();
-
-    while(!Players[currentPlayer].isInGame){
-
-        Turn = (Turn + 1) % Players.size();
+    void Game::addPlayer(Player* p){
         
-        if(current == Turn){
-            throw std::runtime_error("No active players");
+        if(players_list.size() >= 6) {
+            throw std::runtime_error("Maximum 6 players in game");
+        }
+
+        PlayersList.push_back(p);
+    }
+
+    Player* Game:: currentPlayer(){
+        return Players[PlayerTurn];
+    }
+
+    void Game::nextTurn(){
+        int current = PlayerTurn;
+        PlayerTurn = (Turn + 1) % Players.size();
+
+        while(!Players[currentPlayer].isInGame){
+
+            PlayerTurn = (PlayerTurn + 1) % Players.size();
+            
+            if(current == PlayerTurn){
+                throw std::runtime_error("No active players");
+            }
         }
     }
-}
 
+    void turn() const{
+        std::string PlayerName =  players_list.at(PlayerTurn)->getName();
+        std::cout << PlayerName << "\n";
+    }
+
+    sts::vector <std::string> Game::players() const{
+        
+        std::vector <std::string> names;
+
+        for(Player* p : PlayersList){
+            
+            if(p->isInGame()){
+                names.push_back(p->getName());
+            }
+        }
+        return names;
+    }
+
+    std::string winner() const{
+
+        std::string last;
+        
+        if(playersInTheGame != 1){
+            throw std::runtime_error("The game is not finisd");
+        }
+        
+        for(Player* p : PlayersList){
+            
+            if(p->isInGame()){
+                last = p->getName();
+                break;
+            }
+        }
+        return last;
+    }
+
+    int playersInTheGame() const{
+
+        int ans = 0;
+
+        for(Player* p : PlayersList){    
+            if(p->isInGame()){
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+
+}

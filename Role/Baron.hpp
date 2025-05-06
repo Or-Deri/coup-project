@@ -1,16 +1,19 @@
 #pragma once
 #include "Player.hpp"
 
-
-class Baron : public Player{
-
-    public:
+namespace coup {
     
-        std::string name() const override {
-            return "Baron";
-        }
+    class Baron : public Player{
 
-        void ability (Game& game, Player& self) override;
+        public:
+        
+
+            Baron(Game& game, const std::string& name);
+            
+            void invest();
+
+            void ability (Game& game, Player& self) override;
 
 
-};
+    };
+}

@@ -1,16 +1,21 @@
 #pragma once
 #include "Player.hpp"
 
+namespace coup {
 
-class Governor : public Player {
+    class Governor : public Player {
 
-    public:
-    
-        std::string name() const override {
-            return "Governor";
-        }
+        private:
+        
+            bool undoTheTax = false;
+        
+        public:
+        
+            Governor(Game& game, const std::string& name);
+            void setUndo(bool x);
+            bool isTaxUndo() const;
+            void undoTax();
+            void tax();
+    };
 
-        void ability (Game& game, Player& self) override;
-
-
-};
+}

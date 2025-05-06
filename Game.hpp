@@ -1,22 +1,25 @@
+#pragma once
 #include <vector>
 #include <string>
 
-
-class Game{
-    
-    private:
+namespace coup {
+    class Game{
         
-        std::vector <Player*> Players;
-        int Turn;
-        
-    public:
-        Game();
-        void addPlayer();
-        Player* currentPlayer();
-        void nextTurn();
+        private:
+            
+            std::vector <Player*> PlayersList;
+            int PlayerTurn;
 
+        public:
+            Game();
+            void addPlayer(Player* player);
+            Player* currentPlayer();
+            void nextTurn();
+            void turn() const;
+            sts::vector <std::string> players() const;
+            std::string winner() const;
+            int playersInTheGame() const;
+            
 
-        
-
+    }
 }
-    

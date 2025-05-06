@@ -6,7 +6,7 @@ class Player{
         this.name = name; 
     }
 
-    
+
     std::string coup::getName const(){
         return this.name;
     }
@@ -48,6 +48,14 @@ class Player{
     }
 
     void coup::arrest(Player& target){
+
+        // If a merchant is attacked by a arrest, he Losing 2 coins instead of  pay 1 to the attacking player
+        Merchant* merchant = dynamic_cast <Merchant*>(&target);
+        if(merchant){
+            target.AttackedByArrest();
+            return;
+        }
+
         target.subCoins(1);
         this.addCoins(1);
         // לממש את זה שאסור לעשות את הפעולה על אותו שחקן 2 תורות רצוף 
@@ -60,6 +68,17 @@ class Player{
     }
 
     void coup::coup(Player& target){
+
+        General* general = dynamic_cast <General*>(&target);
+        if(general){// גנרל יכול לבטל את הפעולה
+            
+            if (general->isCoupUndo()){
+                target->setUndo(false);
+                // ממשיך לתור הבא 
+                return;
+            }
+        }
+
         subCoins(7);
         target.lost();
     }

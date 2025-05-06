@@ -13,9 +13,5 @@ class Spy : public Player {
 
         void ability (Game& game, Player& self, Player* target)override;    
 
-
-
         
-
-
 }
