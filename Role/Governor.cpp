@@ -9,7 +9,6 @@ namespace coup {
         this.name = name;
     }
 
-    void startTurn(){}
     void setUndo(bool x){
         this.undoTheTax = x;
     }

@@ -10,7 +10,7 @@ namespace coup {
         this.game = game;
         this.name = name;
     }
-    void startTurn(){}
+    
 
     void Spy::ability (Game& game, Player& self, Player* target){
         

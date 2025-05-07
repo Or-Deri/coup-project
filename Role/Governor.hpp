@@ -12,7 +12,7 @@ namespace coup {
         public:
         
             Governor(Game& game, const std::string& name);
-            void startTurn() override;
+        
             void setUndo(bool x);
             bool isTaxUndo() const;
             void undoTax();

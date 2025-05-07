@@ -9,7 +9,7 @@ namespace coup {
         this.game = game;
         this.name = name;
     }
-    void startTurn(){}
+    
     bool isBribeUndo() const{
         return this.undoTheBribe ;
     }

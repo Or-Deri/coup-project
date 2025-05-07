@@ -10,8 +10,7 @@ class Spy : public Player {
         std::string name() const override{
             return "Spy";
         }
-        void startTurn() override;
-        
+
 
         
 }

@@ -44,6 +44,14 @@ class Player{
     }
 
     void coup::bribe(){
+        if (game.turn() != this.getName()) {
+            throw std::runtime_error("It is not your turn");
+        }
+        if (this.getCoins() < 3) {
+            throw std::runtime_error("Not enough coins to bribe.");
+        }
+    
+// לסיים 
         subCoins(4);
         // לממש 2 תורים ברציופות        
     }
@@ -56,10 +64,13 @@ class Player{
             target.AttackedByArrest();
             return;
         }
+        else{    
+            target.subCoins(1);
+            this.addCoins(1);
+            // לממש את זה שאסור לעשות את הפעולה על אותו שחקן 2 תורות רצוף (האם רצוף מאותו שחקן או מכול השחקנים ??) 
+        }
 
-        target.subCoins(1);
-        this.addCoins(1);
-        // לממש את זה שאסור לעשות את הפעולה על אותו שחקן 2 תורות רצוף 
+        game.nextTurn();
     }
 
     void coup::sanction(Player& target){

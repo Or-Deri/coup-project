@@ -27,7 +27,7 @@ namespace coup {
 
 
             void gather();
-            void tax();
+            virtual void tax();
             void bribe();
             void sanction(Player& target);
             void coup(Player& target);
