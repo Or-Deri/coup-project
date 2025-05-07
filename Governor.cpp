@@ -4,7 +4,7 @@
 
 namespace coup {
  
-    Governor(Game& game, const std::string& name) {
+    Governor::Governo(Game& game, const std::string& name) {
         this.game = game;
         this.name = name;
     }
@@ -17,11 +17,11 @@ namespace coup {
         return this.undoTheTax;
     }
 
-    void undo(player target){
+    void Governor::undo(Player target){
     
     }
     
-    void Governor::tax(){
+    void tax(){
         addCoins(3);
     }
 }

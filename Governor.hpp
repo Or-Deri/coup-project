@@ -15,7 +15,7 @@ namespace coup {
         
             void setUndo(bool x);
             bool isTaxUndo() const;
-            void undo(player target);
+            void undo(Player target);
             void tax();
     };
 

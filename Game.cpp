@@ -1,15 +1,18 @@
 #include "Game.hpp"
 #include "Player.hpp"
+#include <stdexcept>
+
 
 namespace coup {
 
     Game::Game(){
         PlayerTurn = 0;
+        
     }
 
     void Game::addPlayer(Player* p){
         
-        if(players_list.size() >= 6) {
+        if(PlayersList.size() >= 6) {
             throw std::runtime_error("Maximum 6 players in game");
         }
 
@@ -17,48 +20,48 @@ namespace coup {
     }
 
     Player* Game:: currentPlayer(){
-        return Players[PlayerTurn];
+        return players().at(PlayerTurn);
     }
 
     void Game::nextTurn(){
         int current = PlayerTurn;
-        PlayerTurn = (PlayerTurn + 1) % Players.size();
+        PlayerTurn = (PlayerTurn + 1) % players().size();
 
-        while(!Players[currentPlayer].isInGame){
+        while(!players().at(currentPlayer()).isInGame()){
 
-            PlayerTurn = (PlayerTurn + 1) % Players.size();
+            PlayerTurn = (PlayerTurn + 1) % players().size();
             
             if(current == PlayerTurn){
                 throw std::runtime_error("No active players");
             }
         }
 
-        PlayersList[PlayerTurn]->startTurn();
+        PlayersList.at(PlayerTurn()).startTurn();
     }
 
-    std::string turn() const{
-        std::string PlayerName =  players_list.at(PlayerTurn)->getName();
+    std::string turn(){
+        std::string PlayerName =  PlayersList.at(PlayerTurn()).getName();
         return PlayerName;
     }
 
-    sts::vector <std::string> Game::players() const{
+    std::vector <std::string> Game::players() const{
         
         std::vector <std::string> names;
 
         for(Player p : PlayersList){
             
-            if(p->isInGame()){
-                names.push_back(p->getName());
+            if(p.isInGame()){
+                names.push_back(p.getName());
             }
         }
         return names;
     }
 
-    std::string winner() const{
+    std::string winner() {
 
         std::string last;
         
-        if(playersInTheGame != 1){
+        if(this.playersInTheGame() != 1){
             throw std::runtime_error("The game is not finisd");
         }
         
@@ -72,7 +75,7 @@ namespace coup {
         return last;
     }
 
-    int playersInTheGame() const{
+    int playersInTheGame(){
 
         int ans = 0;
 

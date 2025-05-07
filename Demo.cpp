@@ -101,6 +101,6 @@ int main() {
     // Gilad
     for (string name : players) {
         cout << name << endl;
-    }
+    };
 
 }

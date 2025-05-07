@@ -11,7 +11,7 @@ namespace coup {
 
             
             std::vector <Player*> PlayersList;
-            int PlayerTurn;
+            int PlayerTurn = 0;
 
         public:
 
@@ -20,10 +20,10 @@ namespace coup {
             void addPlayer(Player* player);
             Player* currentPlayer();
             void nextTurn();
-            std::string turn() const;
+            std::string turn();
             std::vector <std::string> players() const;
-            std::string winner() const;
-            int playersInTheGame() const;
+            std::string winner();
+            int playersInTheGame();
             
 
     };

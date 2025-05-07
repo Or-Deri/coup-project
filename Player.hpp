@@ -10,11 +10,11 @@ namespace coup {
             int balance = 0;
             std::string name;
             bool inGame = true;
-            coup::Game* game;
+            Game game;
 
         public:
 
-            Player(coup::Game* game, const std::string& name);
+            Player(coup::Game& game, const std::string& name);
 
             std::string getName() const;
             int coins() const;
