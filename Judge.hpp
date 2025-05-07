@@ -15,6 +15,5 @@ namespace coup {
             
             bool isBribeUndo();
             void setUndo(bool x);
-            void undoBribe();
-        };
+            void undo(Player target);
 }

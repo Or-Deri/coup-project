@@ -1,8 +1,10 @@
 #pragma once
+#include "Player.hpp"
 #include <vector>
 #include <string>
 
 namespace coup {
+    class Player;
     class Game{
         
         private:
@@ -16,10 +18,10 @@ namespace coup {
             Player* currentPlayer();
             void nextTurn();
             void turn() const;
-            sts::vector <std::string> players() const;
+            std::vector <std::string> players() const;
             std::string winner() const;
             int playersInTheGame() const;
             
 
-    }
+    };
 }

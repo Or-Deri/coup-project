@@ -7,17 +7,17 @@ namespace coup {
     class Player {
         
         protected:
-            int coins = 0;
+            int balance = 0;
             std::string name;
-            bool inGame = true:
-            Game& game;
+            bool inGame = true;
+            coup::Game* game;
 
         public:
 
-            Player(Game& game, const std::string& name);
+            Player(coup::Game* game, const std::string& name);
 
             std::string getName() const;
-            int getCoins() const;
+            int coins() const;
             void addCoins(int x);
             void subCoins(int x);
             
@@ -32,6 +32,6 @@ namespace coup {
             void sanction(Player& target);
             void coup(Player& target);
         
-    }
+    };
 
 }

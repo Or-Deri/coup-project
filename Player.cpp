@@ -11,16 +11,16 @@ class Player{
         return this.name;
     }
 
-    int coup::getCoins const(){
-        return this.coins;
+    int coup::coins const(){
+        return this.balance;
     }
 
     void coup::addCoins(int x){
-        this.coins += x;
+        this.balance += x;
     }
 
     void coup::addCoins(int x){
-        this.coins -= x;
+        this.balance -= x;
     }
 
     bool coup::isInGame const(){
@@ -47,11 +47,11 @@ class Player{
         if (game.turn() != this.getName()) {
             throw std::runtime_error("It is not your turn");
         }
-        if (this.getCoins() < 3) {
+        if (this.coins() < 3) {
             throw std::runtime_error("Not enough coins to bribe.");
         }
     
-// לסיים 
+// לסיים
         subCoins(4);
         // לממש 2 תורים ברציופות        
     }

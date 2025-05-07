@@ -17,7 +17,7 @@ namespace coup {
         return this.undoTheTax;
     }
 
-    void undoTax(){
+    void undo(player target){
         if()
     }
     

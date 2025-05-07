@@ -18,7 +18,7 @@ namespace coup {
         this.undoTheBribe = x;
     }
 
-    void undoBribe(){
-
+    void undo(Player target){
+            
     }
 }
