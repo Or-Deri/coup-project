@@ -8,12 +8,13 @@ namespace coup {
     class Game{
         
         private:
-        
+
             
             std::vector <Player*> PlayersList;
             int PlayerTurn;
 
         public:
+        
 
             Game();
             void addPlayer(Player* player);
