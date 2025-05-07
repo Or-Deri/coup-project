@@ -14,13 +14,13 @@ namespace coup {
             int PlayerTurn;
 
         public:
-        
+
 
             Game();
             void addPlayer(Player* player);
             Player* currentPlayer();
             void nextTurn();
-            void turn() const;
+            std::string turn() const;
             std::vector <std::string> players() const;
             std::string winner() const;
             int playersInTheGame() const;

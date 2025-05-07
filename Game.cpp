@@ -36,16 +36,16 @@ namespace coup {
         PlayersList[PlayerTurn]->startTurn();
     }
 
-    void turn() const{
+    std::string turn() const{
         std::string PlayerName =  players_list.at(PlayerTurn)->getName();
-        std::cout << PlayerName << "\n";
+        return PlayerName;
     }
 
     sts::vector <std::string> Game::players() const{
         
         std::vector <std::string> names;
 
-        for(Player* p : PlayersList){
+        for(Player p : PlayersList){
             
             if(p->isInGame()){
                 names.push_back(p->getName());

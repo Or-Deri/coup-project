@@ -23,7 +23,7 @@ class Player{
         this.balance -= x;
     }
 
-    bool coup::isInGame const(){
+    bool coup::isInGame() const{
         return this.inGame;
     }
 
@@ -31,15 +31,24 @@ class Player{
         this.inGame = false;
     }
 
-    void startTurn(){}
+    void startTurn(){
+        if (game.turn() != this.getName()) {
+            throw std::runtime_error("It is not your turn");
+        }
+    }
 
     void coup::gather(){
+        if (game.turn() != this.getName()) {
+            throw std::runtime_error("It is not your turn");
+        }
 
         addCoins(1);
     }
 
     void coup::tax(){
-
+        if (game.turn() != this.getName()) {
+            throw std::runtime_error("It is not your turn");
+        }
         addCoins(2);
     }
 
@@ -51,12 +60,16 @@ class Player{
             throw std::runtime_error("Not enough coins to bribe.");
         }
     
-// לסיים
+        // לסיים
+        
         subCoins(4);
         // לממש 2 תורים ברציופות        
     }
 
     void coup::arrest(Player& target){
+        if (game.turn() != this.getName()) {
+            throw std::runtime_error("It is not your turn");
+        }
 
         // If a merchant is attacked by a arrest, he Losing 2 coins instead of  pay 1 to the attacking player
         Merchant* merchant = dynamic_cast <Merchant*>(&target);
@@ -74,12 +87,18 @@ class Player{
     }
 
     void coup::sanction(Player& target){
+        if (game.turn() != this.getName()) {
+            throw std::runtime_error("It is not your turn");
+        }
         //השחקן בוחר שחקן אחר ומונע ממנו להשתמש בפעולות כלכליות (gather, tax) עד לתורו הבא. עלות פעולה זו היא 3 מטבעות.
 
         subCoins(3);
     }
 
     void coup::coup(Player& target){
+        if (game.turn() != this.getName()) {
+            throw std::runtime_error("It is not your turn");
+        }
 
         General* general = dynamic_cast <General*>(&target);
         if(general){// גנרל יכול לבטל את הפעולה

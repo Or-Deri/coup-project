@@ -18,7 +18,7 @@ namespace coup {
     }
 
     void undo(player target){
-        if()
+    
     }
     
     void Governor::tax(){
