@@ -13,6 +13,7 @@ namespace coup {
             int PlayerTurn;
 
         public:
+        
             Game();
             void addPlayer(Player* player);
             Player* currentPlayer();
