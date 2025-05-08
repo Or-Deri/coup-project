@@ -6,41 +6,42 @@
 namespace coup {
 
     Game::Game(){
-        PlayerTurn = 0;
-        
+        playerTurn = 0;
+        playersList.clear();
+
     }
 
     void Game::addPlayer(Player* p){
         
-        if(PlayersList.size() >= 6) {
+        if(playersList.size() >= 6) {
             throw std::runtime_error("Maximum 6 players in game");
         }
 
-        PlayersList.push_back(p);
+        playersList.push_back(p);
     }
 
-    Player* Game:: currentPlayer(){
-        return players().at(PlayerTurn);
+    Player* Game::currentPlayer(){
+        return playersList.at(playerTurn);
     }
 
     void Game::nextTurn(){
-        int current = PlayerTurn;
-        PlayerTurn = (PlayerTurn + 1) % players().size();
+        int current = playerTurn;
+        playerTurn = (playerTurn + 1) % players().size();
 
-        while(!players().at(currentPlayer()).isInGame()){
+        while(!playersList.at(playerTurn)->isInGame()){
 
-            PlayerTurn = (PlayerTurn + 1) % players().size();
+            playerTurn = (playerTurn + 1) % players().size();
             
-            if(current == PlayerTurn){
+            if(current == playerTurn){
                 throw std::runtime_error("No active players");
             }
         }
 
-        PlayersList.at(PlayerTurn()).startTurn();
+        playersList.at(playerTurn)->startTurn();
     }
 
-    std::string turn(){
-        std::string PlayerName =  PlayersList.at(PlayerTurn()).getName();
+    std::string Game::turn(){
+        std::string PlayerName =  playersList.at(playerTurn)->getName();
         return PlayerName;
     }
 
@@ -48,24 +49,24 @@ namespace coup {
         
         std::vector <std::string> names;
 
-        for(Player p : PlayersList){
+        for(Player* p : playersList){
             
-            if(p.isInGame()){
-                names.push_back(p.getName());
+            if(p->isInGame()){
+                names.push_back(p->getName());
             }
         }
         return names;
     }
 
-    std::string winner() {
+    std::string Game::winner() {
 
         std::string last;
         
-        if(this.playersInTheGame() != 1){
+        if(playersInTheGame() != 1){
             throw std::runtime_error("The game is not finisd");
         }
         
-        for(Player* p : PlayersList){
+        for(Player* p : playersList) {
             
             if(p->isInGame()){
                 last = p->getName();
@@ -75,11 +76,11 @@ namespace coup {
         return last;
     }
 
-    int playersInTheGame(){
+    int Game::playersInTheGame(){
 
         int ans = 0;
 
-        for(Player* p : PlayersList){    
+        for(Player* p : playersList){    
             if(p->isInGame()){
                 ans++;
             }

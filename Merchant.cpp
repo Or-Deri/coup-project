@@ -1,27 +1,24 @@
 #include "Merchant.hpp"
 #include "Game.hpp"
-
+#include "Player.hpp"
 namespace coup {
 
-    Merchant(Game& game, const std::string& name){
-        this.game = game;
-        this.name = name;
-    }
+    Merchant::Merchant(Game& game, const std::string& name) : Player(game, name){}
 
-    void startTurn(){
-        if(this.getCoins >= 3){
-            this.addCoins(1);
+    void Merchant::startTurn(){
+        if(coins() >= 3){
+            addCoins(1);
         }
     }
 
-    void GiveBonus(){ // צריך לתת רק שיש לפחות 3 מטבעות
-        if(this.getCoins >= 3){
-            this.addCoins(1);
+    void Merchant::giveBonus(){ // צריך לתת רק שיש לפחות 3 מטבעות
+        if(coins() >= 3){
+            addCoins(1);
         }
     }
 
-    void AttackedByArrest(){
-        this.subCoins(2);
+    void Merchant::attackedByArrest(){
+        subCoins(2);
     }
     
 }

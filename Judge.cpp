@@ -1,24 +1,25 @@
 #include "Judge.hpp"
 #include "Game.hpp"
+#include "Player.hpp"
 
 namespace coup {
 
 
 
-    Judge(Game& game, const std::string& name){
-        this.game = game;
-        this.name = name;
-    }
+    Judge::Judge(Game& game, const std::string& name) : Player(game, name){}
     
-    bool isBribeUndo() const{
-        return this.undoTheBribe ;
+    bool Judge::isBribeUndo(){
+        return undoTheBribe ;
     }
 
-    void setUndo(bool x){
-        this.undoTheBribe = x;
+    void Judge::setUndo(bool x){
+        undoTheBribe = x;
     }
 
-    void undo(Player target){
+    void Judge::undo(Player* target){
+        if (game->lastAction != "bribe") {
+            throw std::runtime_error("Judge cannot undo"+game->lastAction);
+        }
             
     }
 }

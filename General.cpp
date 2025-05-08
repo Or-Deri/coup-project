@@ -1,35 +1,34 @@
 #include "General.hpp"
 #include "Game.hpp"
+#include <stdexcept>
+
 
 
 namespace coup {
 
-    General::General(Game& game, const std::string& name){
-        this.game = game;
-        this.name = name;
-    }
+    General::General(Game& game, const std::string& name)  :Player(game, name){}
 
-    void General::undoCoup(){
-        if (this.getCoins < 5){
-            throw runtime_error ("Not enough coins");
+    void General::undo(Player& target){
+        if (coins() < 5){
+            throw std::runtime_error ("Not enough coins");
         }
 
-        this.subCoins(5);
+        subCoins(5);
         setUndo(false);
     }
 
         
     bool General::isCoupUndo ()const {
-        return this.undoTheCoup;
+        return undoTheCoup;
     }
         
-    void General::setUndo(book x){
-        this.undoTheCoup = x;
+    void General::setUndo(bool x){
+        undoTheCoup = x;
     }
 
-    void General::ReturnsCoin(player& target){
+    void General::ReturnsCoin(Player& target){
         target.subCoins(1);
-        this.addCoins(1);
+        addCoins(1);
     }
 
 }

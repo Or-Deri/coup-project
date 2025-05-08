@@ -4,17 +4,20 @@
 
 namespace coup {
 
+    class Game;
+
     class Player {
         
         protected:
-            int balance = 0;
+            int balance;
             std::string name;
-            bool inGame = true;
-            Game game;
+            bool inGame;
+            Game* game;
+    
 
         public:
 
-            Player(coup::Game& game, const std::string& name);
+            Player( Game& game, const std::string& name);
 
             std::string getName() const;
             int coins() const;
@@ -29,6 +32,7 @@ namespace coup {
             void gather();
             virtual void tax();
             void bribe();
+            void arrest(Player& target);
             void sanction(Player& target);
             void coup(Player& target);
         

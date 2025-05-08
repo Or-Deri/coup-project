@@ -10,8 +10,8 @@ namespace coup {
         public:
             Merchant(Game& game, const std::string& name);
             void startTurn() override;
-            void GiveBonus();
-            void AttackedByArrest();
+            void giveBonus();
+            void attackedByArrest();
             
         };
 }

@@ -5,16 +5,17 @@
 
 namespace coup {
     class Player;
+
+    
     class Game{
         
         private:
-
-            
-            std::vector <Player*> PlayersList;
-            int PlayerTurn = 0;
+            std::vector<Player*> playersList;
+            int playerTurn;
+            std::string lastAction;
+            Player* lastPlayer = nullptr;
 
         public:
-
 
             Game();
             void addPlayer(Player* player);
