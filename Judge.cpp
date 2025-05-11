@@ -1,6 +1,8 @@
 #include "Judge.hpp"
 #include "Game.hpp"
 #include "Player.hpp"
+#include <stdexcept>
+
 
 namespace coup {
 
@@ -16,10 +18,17 @@ namespace coup {
         undoTheBribe = x;
     }
 
-    void Judge::undo(Player* target){
-        if (game->lastAction != "bribe") {
-            throw std::runtime_error("Judge cannot undo"+game->lastAction);
+    void Judge::undo(Player& target){
+
+        if (game->getLastAction() != "bribe" || game->getLastPlayer() != &target) {                  //Judge can undo only tax ,and only right after it was done
+            throw std::runtime_error("--------------Judge cannot undo -----------------");
         }
-            
+
+        target.subExtraTurns();
+        target.subExtraTurns();
+
+        game->setLastAction("");
+        game->setLastPlayer(nullptr);
+        
     }
 }

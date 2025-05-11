@@ -12,17 +12,61 @@ namespace coup {
 
 
     void Baron::invest(){
-        // יכול "להשקיע" 3 מטבעות ולקבל בתמורה 6 מטבעות. בנוסף, אם הוא מותקף באמצעות חרם (sanction), הוא מקבל מטבע אחד כפיצוי (כלומר, מכל התהליך הוא יכול להפסיד לכל היותר מטבע אחד אם השתמש במס)
+        
+        if (game->turn() != getName()) {
+            throw std::runtime_error("Not baron's turn");
+        }
+        
         if (coins() < 3){
-            throw std::runtime_error ("Not enough coins");
+            throw std::runtime_error ("Not enough coins to invest");
         }
 
         subCoins(3);
-        //  כאן בודק אם מישהו מערער 
-        // מוסיף לו 6  אם לא
+        addCoins(6);
+
+
+        game->setLastAction("invest");
+        game->setLastPlayer(this);
+        game->nextTurn();
+    }
+
+
+
+    
+    void Baron::gather(){
+        if (game->turn() != getName()) {
+            throw std::runtime_error(std::string("Not ")+typeid(*this).name()+std::string("'s turn")); //---------------------??
+        }
+
+        addCoins(1);
+
+        lastIBlockedArrest = nullptr;
+
+        game->setLastAction("gather");
+        game->setLastPlayer(this);
+        game->nextTurn();
 
     }
 
+    void Baron::tax(){
+        if (game->turn() != getName()) {
+            throw std::runtime_error("It is not your turn");
+        }
+        
+        if(sanctionBlocked){
+            addCoins(1);
+        }
+        else{
+            addCoins(2);
+        }
+
+        lastIBlockedArrest = nullptr;
+
+        game->setLastAction("tax");
+        game->setLastPlayer(this);
+        game->nextTurn();
+
+    }
 
 
 

@@ -13,7 +13,11 @@ namespace coup {
             std::string name;
             bool inGame;
             Game* game;
-    
+            bool arrestBlocked;
+            bool sanctionBlocked;
+            Player* lastBlockedBySanction;
+            int extraTurns;
+            Player* lastIBlockedArrest;
 
         public:
 
@@ -25,16 +29,29 @@ namespace coup {
             void subCoins(int x);
             
             bool isInGame() const;
-            void lost();
+            void setInGame(bool x);
             virtual void startTurn();
 
+            int getExtraTurns();
+            void subExtraTurns();
 
-            void gather();
+            void setArrestBlocked(bool x);
+            bool isArrestBlocked() const;
+
+            void setSanctionBlocked(bool x);
+            bool isSanctionBlocked();
+
+            Player* getLastIBlockedArrest() const;
+            void setLastIBlockedArrest(Player& target);
+
+            virtual void gather();
             virtual void tax();
-            void bribe();
+            virtual void bribe();
             void arrest(Player& target);
             void sanction(Player& target);
             void coup(Player& target);
+
+
         
     };
 

@@ -9,12 +9,33 @@ namespace coup {
     General::General(Game& game, const std::string& name)  :Player(game, name){}
 
     void General::undo(Player& target){
+
+        //Can undo coup only immediately after the action
+        if(game->getLastAction() != "coup"){
+            throw std::runtime_error("The last action is not coup");
+        }
+
+        //Checks if undo is to the correct player
+        if (game->getLastPlayer() != &target){
+            throw std::runtime_error("The target player is incorrect");
+        }
+
+        if (!undoTheCoup) {
+            throw std::runtime_error("General is dont want to block coup");
+        }
+
         if (coins() < 5){
             throw std::runtime_error ("Not enough coins");
         }
 
         subCoins(5);
-        setUndo(false);
+
+        target.setInGame(true);
+        undoTheCoup = false;
+
+        game->setLastAction("");
+        game->setLastPlayer(nullptr);
+        game->nextTurn();
     }
 
         
@@ -26,9 +47,9 @@ namespace coup {
         undoTheCoup = x;
     }
 
-    void General::ReturnsCoin(Player& target){
-        target.subCoins(1);
-        addCoins(1);
-    }
+    // void General::ReturnsCoin(Player& target){
+    //     target.subCoins(1);
+    //     addCoins(1);\\\\\\\\\\\\\
+    // }
 
 }

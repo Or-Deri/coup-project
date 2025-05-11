@@ -18,12 +18,17 @@ namespace coup {
         this->balance = 0;
         this->inGame = true;
         game.addPlayer(this);
+        this->arrestBlocked = false;
+        this->sanctionBlocked = false;
+        this->lastBlockedBySanction = nullptr;
+        this->extraTurns = 0;
     }
 
 
     std::string Player::getName() const{
         return name;
     }
+
 
     int Player::coins() const{
         return balance;
@@ -41,13 +46,58 @@ namespace coup {
         return inGame;
     }
 
-    void Player::lost(){
-        inGame = false;
+    void Player::setInGame(bool x){
+        inGame = x;
     }
 
-    void Player::startTurn(){
+    
+    int Player::getExtraTurns(){
+        return extraTurns;
+    }
+    void Player::subExtraTurns(){
+        extraTurns--;
+    }
+
+    void Player::setArrestBlocked(bool x){
+        arrestBlocked = x;
+    }
+    bool Player::isArrestBlocked() const{
+        return arrestBlocked;
+    }
+
+    void Player::setSanctionBlocked(bool x){
+        sanctionBlocked = x;
+    }
+    bool Player::isSanctionBlocked(){
+        return sanctionBlocked ;
+    }
+
+    // void Player::setExtraTurns(int x){
+    //     extraTurns = x;
+    // }
+
+    Player* Player::getLastIBlockedArrest() const{
+        return lastIBlockedArrest;
+    }
+    void Player::setLastIBlockedArrest(Player& target){
+        lastIBlockedArrest = &target;
+    }
+
+
+    void Player::startTurn(){    // רק SPY ו merchant דורסות את הפונקציה הזאת 
         if (game->turn() != getName()) {
             throw std::runtime_error("It is not your turn");
+        }
+
+        //If a player was blocked by sanction in the previous turn, the block is removed
+        if (lastBlockedBySanction != nullptr){
+            lastBlockedBySanction->setSanctionBlocked(false);
+            lastBlockedBySanction = nullptr;
+        }
+        
+        if(coins() >= 10){
+            /// חייב לבצע הפיכה 
+
         }
     }
 
@@ -56,38 +106,53 @@ namespace coup {
             throw std::runtime_error(std::string("Not ")+typeid(*this).name()+std::string("'s turn"));
         }
 
+        if(sanctionBlocked){
+            throw std::runtime_error("You are blocked by sanction");
+        }
+
         addCoins(1);
 
-        game->lastAction = "gather";
-        game->lastActor = this;
+        lastIBlockedArrest = nullptr;
+
+        game->setLastAction("gather");
+        game->setLastPlayer(this);
+        game->nextTurn();
     }
 
     void Player::tax(){
         if (game->turn() != getName()) {
             throw std::runtime_error("It is not your turn");
         }
+        
+        if(sanctionBlocked){
+            throw std::runtime_error("You are blocked by sanction");
+        }
+
         addCoins(2);
 
-        game->lastAction = "tax";
-        game->lastActor = this;
+        lastIBlockedArrest = nullptr;
+
+        game->setLastAction("tax");
+        game->setLastPlayer(this);
+        game->nextTurn();
     }
 
     void Player::bribe(){
+        
         if (game->turn() != getName()) {
             throw std::runtime_error("It is not your turn");
         }
-        if (coins() < 3) {
-            throw std::runtime_error("Not enough coins to bribe.");
+        if (coins() < 4) {
+            throw std::runtime_error("Not enough coins to bribe");
         }
     
-        // לסיים
-        
         subCoins(4);
-        // לממש 2 תורים ברציופות       
+        extraTurns = 2;    
         
-        
-        game->lastAction = "bribe";
-        game->lastActor = this;
+        lastIBlockedArrest = nullptr;
+
+        game->setLastAction("bribe");
+        game->setLastPlayer(this);
     }
 
     void Player::arrest(Player& target){
@@ -95,11 +160,26 @@ namespace coup {
             throw std::runtime_error("It is not your turn");
         }
 
+        if (arrestBlocked) {
+            arrestBlocked = false; 
+            throw std::runtime_error("You have been blocked , You can't do arrest");
+        }
+
+        //It is impossible to do 2 consecutive turns on the same player
+        if(&target == lastIBlockedArrest){
+            throw std::runtime_error("In the previous turn you did it on the same player");
+        }
+        
+
         // If a merchant is attacked by a arrest, he Losing 2 coins instead of  pay 1 to the attacking player
         Merchant* merchant = dynamic_cast<Merchant*>(&target);
+        General* general = dynamic_cast<General*>(&target);
         if(merchant){
             merchant->attackedByArrest();
             return;
+        }
+        else if(general){ // Nothing is happening
+            
         }
         else{    
             target.subCoins(1);
@@ -107,45 +187,52 @@ namespace coup {
             // לממש את זה שאסור לעשות את הפעולה על אותו שחקן 2 תורות רצוף (האם רצוף מאותו שחקן או מכול השחקנים ??) 
         }
 
+        setLastIBlockedArrest(target);
 
-        game->lastAction = "arrest";
-        game->lastActor = this;
+        game->setLastAction("arrest");
+        game->setLastPlayer(this);
         game->nextTurn();
     }
 
     void Player::sanction(Player& target){
+        
         if (game->turn() != getName()) {
             throw std::runtime_error("It is not your turn");
         }
-        //השחקן בוחר שחקן אחר ומונע ממנו להשתמש בפעולות כלכליות (gather, tax) עד לתורו הבא. עלות פעולה זו היא 3 מטבעות.
+        
 
         subCoins(3);
 
+        target.setSanctionBlocked(true); 
 
-        game->lastAction = "sanction";
-        game->lastActor = this;
+        lastIBlockedArrest = nullptr;
+
+        game->setLastAction("sanction");
+        game->setLastPlayer(this);
+        game->nextTurn();
     }
 
     void Player::coup(Player& target){
         if (game->turn() != getName()) {
             throw std::runtime_error("It is not your turn");
         }
-
-        General* general = dynamic_cast<General*>(&target);
-        if(general){// גנרל יכול לבטל את הפעולה
-            
-            if (general->isCoupUndo()){
-                general->setUndo(false);
-                // ממשיך לתור הבא 
-                return;
-            }
+        
+        if (coins() < 7) {
+            throw std::runtime_error("Not enough coins to coup");
         }
-
+    
         subCoins(7);
-        target.lost();
 
-        game->lastAction = "coup";
-        game->lastActor = this;
+
+        game->setLastAction("coup");
+        game->setLastPlayer(this);
+        // game->lastTarget = &target;
+    
+            
+        target.setInGame(false);
+        lastIBlockedArrest = nullptr;
+
+        game->nextTurn();
     }
     
 }

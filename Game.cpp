@@ -20,19 +20,44 @@ namespace coup {
         playersList.push_back(p);
     }
 
+
+    std::string Game::getLastAction(){
+        return lastAction;
+    }    
+    void Game::setLastAction(const std::string& name){
+        lastAction = name;
+    }
+    Player* Game::getLastPlayer(){
+        return lastPlayer;
+    }
+    void Game::setLastPlayer(Player* p){
+        lastPlayer = p;
+    }
+
+
     Player* Game::currentPlayer(){
         return playersList.at(playerTurn);
     }
 
     void Game::nextTurn(){
-        int current = playerTurn;
+
+        Player* current = currentPlayer();
+
+        if (current->getExtraTurns() > 0) {
+            current->subExtraTurns();
+            current->startTurn();
+            return;
+        }
+
+
+        int start = playerTurn;
         playerTurn = (playerTurn + 1) % players().size();
 
         while(!playersList.at(playerTurn)->isInGame()){
 
             playerTurn = (playerTurn + 1) % players().size();
             
-            if(current == playerTurn){
+            if(start == playerTurn){
                 throw std::runtime_error("No active players");
             }
         }

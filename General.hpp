@@ -12,7 +12,7 @@ namespace coup {
         General(Game& game, const std::string& name);
         bool isCoupUndo() const;
         void setUndo(bool x);
-        void ReturnsCoin(Player& target);
+        // void ReturnsCoin(Player& target);
         void undo(Player& target); 
     };
 

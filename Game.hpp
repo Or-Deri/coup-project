@@ -19,6 +19,13 @@ namespace coup {
 
             Game();
             void addPlayer(Player* player);
+            
+            std::string getLastAction();
+            void setLastAction(const std::string& name);
+            
+            Player* getLastPlayer();
+            void setLastPlayer(Player* p);
+            
             Player* currentPlayer();
             void nextTurn();
             std::string turn();

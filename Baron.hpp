@@ -9,7 +9,9 @@ namespace coup {
         
 
             Baron(Game& game, const std::string& name);
+            void gather();
             void invest();
+            void tax() override;
 
 
 
