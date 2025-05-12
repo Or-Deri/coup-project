@@ -95,10 +95,6 @@ namespace coup {
             lastBlockedBySanction = nullptr;
         }
         
-        if(coins() >= 10){
-            /// חייב לבצע הפיכה 
-
-        }
     }
 
     void Player::gather(){
@@ -147,7 +143,7 @@ namespace coup {
         }
     
         subCoins(4);
-        extraTurns = 2;    
+        extraTurns = 1;    
         
         lastIBlockedArrest = nullptr;
 
@@ -176,6 +172,9 @@ namespace coup {
         General* general = dynamic_cast<General*>(&target);
         if(merchant){
             merchant->attackedByArrest();
+            game->setLastAction("arrest");
+            game->setLastPlayer(this);
+            game->nextTurn();
             return;
         }
         else if(general){ // Nothing is happening
@@ -200,8 +199,19 @@ namespace coup {
             throw std::runtime_error("It is not your turn");
         }
         
-
-        subCoins(3);
+        Judge* judge = dynamic_cast<Judge*>(&target);
+        if(judge){
+            if(coins() < 4){
+                throw std::runtime_error("Not enough coins to sanction");
+            }
+            subCoins(4);
+        }
+        else{
+            if(coins() < 3){
+                throw std::runtime_error("Not enough coins to sanction");
+            }
+            subCoins(3);
+        }
 
         target.setSanctionBlocked(true); 
 

@@ -8,6 +8,8 @@
 #include "Merchant.hpp"
 #include <random>
 #include <string>
+#include <stdexcept>
+
 
 namespace coup {
 

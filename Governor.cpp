@@ -36,7 +36,7 @@ namespace coup {
         game->setLastPlayer(nullptr);
     }
     
-    void Governor::tax(){
+    void Governor::tax() {
         addCoins(3);
         
         lastIBlockedArrest = nullptr;
