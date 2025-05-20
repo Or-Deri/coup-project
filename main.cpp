@@ -79,13 +79,16 @@ int main() {
     inputText.setPosition(420, 150);
     inputText.setFillColor(sf::Color::Cyan);
 
+    sf::RectangleShape inputBox(sf::Vector2f(300, 40));
+    inputBox.setPosition(415, 145);
+    inputBox.setFillColor(sf::Color(50, 50, 50)); // צבע רקע כהה
     vector<string> actions;
     vector<sf::RectangleShape> actionButtons;
     vector<sf::Text> actionLabels;
 
     sf::Text turnText("", font, 22);
     turnText.setPosition(400, 30);
-    turnText.setFillColor(sf::Color::White);
+    turnText.setFillColor(sf::Color::Black);
 
     vector<sf::RectangleShape> targetButtons;
     vector<sf::Text> targetLabels;
@@ -167,7 +170,7 @@ int main() {
                             screen = GAME;
                             currentTurnPlayerName = ""; 
                         }catch(std::exception& e){
-                            c
+                            
                             game.nextTurn();
                             pendingUndoResponders.clear();
                             screen = GAME;
@@ -483,13 +486,14 @@ int main() {
             }
         }
 
-        window.clear();
+        window.clear(sf::Color(200, 200, 200)); 
 
         if (screen == MENU) {
             drawButton(window, addBtn, addLabel);
             drawButton(window, startBtn, startLabel);
         } else if (screen == NAME_INPUT) {
             inputText.setString(currentInput);
+            window.draw(inputBox); 
             window.draw(prompt);
             window.draw(inputText);
         } else if (screen == GAME) {
@@ -584,7 +588,7 @@ int main() {
 
                     sf::Text status(p->getName() + " - " + roleName(p.get()) + coinInfo, font, 18);
                     status.setPosition(600, y);
-                    status.setFillColor(sf::Color::White);
+                    status.setFillColor(sf::Color::Black);
                     window.draw(status);
                     y += 30;
                 }
