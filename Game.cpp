@@ -1,7 +1,13 @@
 #include "Game.hpp"
 #include "Player.hpp"
 #include <stdexcept>
-
+#include "Governor.hpp"
+#include "Spy.hpp"
+#include "Baron.hpp"
+#include "General.hpp"
+#include "Judge.hpp"
+#include "Merchant.hpp"
+#include <iostream>
 
 namespace coup {
 
@@ -11,16 +17,20 @@ namespace coup {
 
     }
 
+
+
     void Game::addPlayer(Player* p){
         
         if(playersList.size() >= 6) {
             throw std::runtime_error("Maximum 6 players in game");
         }
-
         playersList.push_back(p);
     }
 
-
+    std::vector<Player*> Game::getPlaersList(){
+        return playersList;
+    }
+    
     std::string Game::getLastAction(){
         return lastAction;
     }    
@@ -34,10 +44,18 @@ namespace coup {
         lastPlayer = p;
     }
 
+    Player* Game::getLastTarget(){
+        return lastTarget;
+    }
+    void Game::setLastTarget(Player* p){
+        lastTarget = p;
+    }
+
 
     Player* Game::currentPlayer(){
         return playersList.at(playerTurn);
     }
+
 
     void Game::nextTurn(){
 
@@ -65,15 +83,15 @@ namespace coup {
         playersList.at(playerTurn)->startTurn();
     }
 
+
     std::string Game::turn(){
         std::string PlayerName =  playersList.at(playerTurn)->getName();
         return PlayerName;
     }
 
-    std::vector <std::string> Game::players() const{
-        
-        std::vector <std::string> names;
 
+    std::vector <std::string> Game::players() const{
+        std::vector <std::string> names;
         for(Player* p : playersList){
             
             if(p->isInGame()){
@@ -84,7 +102,6 @@ namespace coup {
     }
 
     std::string Game::winner() {
-
         std::string last;
         
         if(playersInTheGame() != 1){
@@ -102,9 +119,7 @@ namespace coup {
     }
 
     int Game::playersInTheGame(){
-
         int ans = 0;
-
         for(Player* p : playersList){    
             if(p->isInGame()){
                 ans++;
@@ -112,6 +127,4 @@ namespace coup {
         }
         return ans;
     }
-
-
 }

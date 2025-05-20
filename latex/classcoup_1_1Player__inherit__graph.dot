@@ -1,0 +1,19 @@
+digraph "coup::Player"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="coup::Player",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="coup::Baron",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcoup_1_1Baron.html",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="coup::General",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcoup_1_1General.html",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="coup::Governor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcoup_1_1Governor.html",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="coup::Judge",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcoup_1_1Judge.html",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node6 [label="coup::Merchant",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcoup_1_1Merchant.html",tooltip=" "];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node7 [label="coup::Spy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcoup_1_1Spy.html",tooltip=" "];
+}

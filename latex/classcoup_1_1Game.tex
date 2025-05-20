@@ -1,0 +1,166 @@
+\hypertarget{classcoup_1_1Game}{}\doxysection{coup\+::Game Class Reference}
+\label{classcoup_1_1Game}\index{coup::Game@{coup::Game}}
+
+
+{\ttfamily \#include $<$Game.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcoup_1_1Game_a4f442900b2cc019f3457b43580495c45}{Game}} ()
+\item 
+void \mbox{\hyperlink{classcoup_1_1Game_a39bb651e2a66d7f6f17843cc9fde2428}{add\+Player}} (\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$player)
+\begin{DoxyCompactList}\small\item\em Adds a player to the game. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classcoup_1_1Game_a317b47b9afb2e08643d8218f1b698c17}{get\+Last\+Action}} ()
+\item 
+void \mbox{\hyperlink{classcoup_1_1Game_aebd4552d341cd96723a7805eecb2be76}{set\+Last\+Action}} (const std\+::string \&name)
+\item 
+\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$ \mbox{\hyperlink{classcoup_1_1Game_a6ff7e4aead9d29f8a4bd6f4fb98bd463}{get\+Last\+Player}} ()
+\item 
+void \mbox{\hyperlink{classcoup_1_1Game_addb836acee44e0408719b70eec634487}{set\+Last\+Player}} (\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$p)
+\item 
+\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$ \mbox{\hyperlink{classcoup_1_1Game_a3265f651c838ed4eb3d2c038213f224a}{get\+Last\+Target}} ()
+\item 
+void \mbox{\hyperlink{classcoup_1_1Game_ae10f8e595777a4fc9273a392dcc3b8cd}{set\+Last\+Target}} (\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$p)
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$ $>$ \mbox{\hyperlink{classcoup_1_1Game_a31bdcee41b55718729ca9971ce2dc254}{get\+Plaers\+List}} ()
+\item 
+\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$ \mbox{\hyperlink{classcoup_1_1Game_a1ca9b880bbd07f616e30f6b487c0744d}{current\+Player}} ()
+\item 
+void \mbox{\hyperlink{classcoup_1_1Game_a2e045d31bbcd6d1dcc8203a86fea48c6}{next\+Turn}} ()
+\item 
+std\+::string \mbox{\hyperlink{classcoup_1_1Game_a9f2022fd910208c753df6a5ce16db899}{turn}} ()
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classcoup_1_1Game_acee8ce066ec60e298043ed8bd189336f}{players}} () const
+\item 
+std\+::string \mbox{\hyperlink{classcoup_1_1Game_ac9a0c547ad01a870ec5b8d9345080f39}{winner}} ()
+\item 
+int \mbox{\hyperlink{classcoup_1_1Game_a508986db021dc37e6b037532133bea83}{players\+In\+The\+Game}} ()
+\item 
+void \mbox{\hyperlink{classcoup_1_1Game_a466cf296db0a246e1d07941ec2241c7f}{handle\+Undo\+Requests}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcoup_1_1Game_a4f442900b2cc019f3457b43580495c45}\label{classcoup_1_1Game_a4f442900b2cc019f3457b43580495c45}} 
+\index{coup::Game@{coup::Game}!Game@{Game}}
+\index{Game@{Game}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{Game()}{Game()}}
+{\footnotesize\ttfamily coup\+::\+Game\+::\+Game (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcoup_1_1Game_a39bb651e2a66d7f6f17843cc9fde2428}\label{classcoup_1_1Game_a39bb651e2a66d7f6f17843cc9fde2428}} 
+\index{coup::Game@{coup::Game}!addPlayer@{addPlayer}}
+\index{addPlayer@{addPlayer}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{addPlayer()}{addPlayer()}}
+{\footnotesize\ttfamily void coup\+::\+Game\+::add\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+Adds a player to the game. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & pointer to the player to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::runtime\+\_\+error} & if there are alredy 6 players in the game \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classcoup_1_1Game_a1ca9b880bbd07f616e30f6b487c0744d}\label{classcoup_1_1Game_a1ca9b880bbd07f616e30f6b487c0744d}} 
+\index{coup::Game@{coup::Game}!currentPlayer@{currentPlayer}}
+\index{currentPlayer@{currentPlayer}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{currentPlayer()}{currentPlayer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$ coup\+::\+Game\+::current\+Player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_a317b47b9afb2e08643d8218f1b698c17}\label{classcoup_1_1Game_a317b47b9afb2e08643d8218f1b698c17}} 
+\index{coup::Game@{coup::Game}!getLastAction@{getLastAction}}
+\index{getLastAction@{getLastAction}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{getLastAction()}{getLastAction()}}
+{\footnotesize\ttfamily std\+::string coup\+::\+Game\+::get\+Last\+Action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_a6ff7e4aead9d29f8a4bd6f4fb98bd463}\label{classcoup_1_1Game_a6ff7e4aead9d29f8a4bd6f4fb98bd463}} 
+\index{coup::Game@{coup::Game}!getLastPlayer@{getLastPlayer}}
+\index{getLastPlayer@{getLastPlayer}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{getLastPlayer()}{getLastPlayer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$ coup\+::\+Game\+::get\+Last\+Player (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_a3265f651c838ed4eb3d2c038213f224a}\label{classcoup_1_1Game_a3265f651c838ed4eb3d2c038213f224a}} 
+\index{coup::Game@{coup::Game}!getLastTarget@{getLastTarget}}
+\index{getLastTarget@{getLastTarget}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{getLastTarget()}{getLastTarget()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$ coup\+::\+Game\+::get\+Last\+Target (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_a31bdcee41b55718729ca9971ce2dc254}\label{classcoup_1_1Game_a31bdcee41b55718729ca9971ce2dc254}} 
+\index{coup::Game@{coup::Game}!getPlaersList@{getPlaersList}}
+\index{getPlaersList@{getPlaersList}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{getPlaersList()}{getPlaersList()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$ $>$ coup\+::\+Game\+::get\+Plaers\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_a466cf296db0a246e1d07941ec2241c7f}\label{classcoup_1_1Game_a466cf296db0a246e1d07941ec2241c7f}} 
+\index{coup::Game@{coup::Game}!handleUndoRequests@{handleUndoRequests}}
+\index{handleUndoRequests@{handleUndoRequests}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{handleUndoRequests()}{handleUndoRequests()}}
+{\footnotesize\ttfamily void coup\+::\+Game\+::handle\+Undo\+Requests (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_a2e045d31bbcd6d1dcc8203a86fea48c6}\label{classcoup_1_1Game_a2e045d31bbcd6d1dcc8203a86fea48c6}} 
+\index{coup::Game@{coup::Game}!nextTurn@{nextTurn}}
+\index{nextTurn@{nextTurn}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{nextTurn()}{nextTurn()}}
+{\footnotesize\ttfamily void coup\+::\+Game\+::next\+Turn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_acee8ce066ec60e298043ed8bd189336f}\label{classcoup_1_1Game_acee8ce066ec60e298043ed8bd189336f}} 
+\index{coup::Game@{coup::Game}!players@{players}}
+\index{players@{players}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{players()}{players()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::string $>$ coup\+::\+Game\+::players (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classcoup_1_1Game_a508986db021dc37e6b037532133bea83}\label{classcoup_1_1Game_a508986db021dc37e6b037532133bea83}} 
+\index{coup::Game@{coup::Game}!playersInTheGame@{playersInTheGame}}
+\index{playersInTheGame@{playersInTheGame}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{playersInTheGame()}{playersInTheGame()}}
+{\footnotesize\ttfamily int coup\+::\+Game\+::players\+In\+The\+Game (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_aebd4552d341cd96723a7805eecb2be76}\label{classcoup_1_1Game_aebd4552d341cd96723a7805eecb2be76}} 
+\index{coup::Game@{coup::Game}!setLastAction@{setLastAction}}
+\index{setLastAction@{setLastAction}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{setLastAction()}{setLastAction()}}
+{\footnotesize\ttfamily void coup\+::\+Game\+::set\+Last\+Action (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{name }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_addb836acee44e0408719b70eec634487}\label{classcoup_1_1Game_addb836acee44e0408719b70eec634487}} 
+\index{coup::Game@{coup::Game}!setLastPlayer@{setLastPlayer}}
+\index{setLastPlayer@{setLastPlayer}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{setLastPlayer()}{setLastPlayer()}}
+{\footnotesize\ttfamily void coup\+::\+Game\+::set\+Last\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_ae10f8e595777a4fc9273a392dcc3b8cd}\label{classcoup_1_1Game_ae10f8e595777a4fc9273a392dcc3b8cd}} 
+\index{coup::Game@{coup::Game}!setLastTarget@{setLastTarget}}
+\index{setLastTarget@{setLastTarget}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{setLastTarget()}{setLastTarget()}}
+{\footnotesize\ttfamily void coup\+::\+Game\+::set\+Last\+Target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcoup_1_1Player}{Player}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_a9f2022fd910208c753df6a5ce16db899}\label{classcoup_1_1Game_a9f2022fd910208c753df6a5ce16db899}} 
+\index{coup::Game@{coup::Game}!turn@{turn}}
+\index{turn@{turn}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{turn()}{turn()}}
+{\footnotesize\ttfamily std\+::string coup\+::\+Game\+::turn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcoup_1_1Game_ac9a0c547ad01a870ec5b8d9345080f39}\label{classcoup_1_1Game_ac9a0c547ad01a870ec5b8d9345080f39}} 
+\index{coup::Game@{coup::Game}!winner@{winner}}
+\index{winner@{winner}!coup::Game@{coup::Game}}
+\doxysubsubsection{\texorpdfstring{winner()}{winner()}}
+{\footnotesize\ttfamily std\+::string coup\+::\+Game\+::winner (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{Game_8hpp}{Game.\+hpp}}\item 
+\mbox{\hyperlink{Game_8cpp}{Game.\+cpp}}\end{DoxyCompactItemize}

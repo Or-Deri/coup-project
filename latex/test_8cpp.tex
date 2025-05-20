@@ -1,0 +1,128 @@
+\hypertarget{test_8cpp}{}\doxysection{test.\+cpp File Reference}
+\label{test_8cpp}\index{test.cpp@{test.cpp}}
+{\ttfamily \#include \char`\"{}doctest.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Game.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Governor.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}General.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Judge.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Spy.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Baron.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Merchant.\+hpp\char`\"{}}\newline
+Include dependency graph for test.\+cpp\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{test_8cpp_a623b8690a262536536a43eab2d7df03d}{DOCTEST\+\_\+\+CONFIG\+\_\+\+IMPLEMENT\+\_\+\+WITH\+\_\+\+MAIN}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{test_8cpp_af7e3e3cb3737d7188df5f267a6ac0dc4}{TEST\+\_\+\+CASE}} (\char`\"{}Gather and Tax\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_a27af61f4d4b2816a38f712b0b49dba24}{TEST\+\_\+\+CASE}} (\char`\"{}Bribe and extra turns\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_a04a9c9b11f48671ed9a5b91aed2265c4}{TEST\+\_\+\+CASE}} (\char`\"{}Arrest\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_a17ca56e17c637366b418c00753cd0ece}{TEST\+\_\+\+CASE}} (\char`\"{}Sanction \mbox{\hyperlink{classcoup_1_1Judge}{Judge}}\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_ab4389e7166ab891d834608b8f0285e97}{TEST\+\_\+\+CASE}} (\char`\"{}Coup and undo by \mbox{\hyperlink{classcoup_1_1General}{General}}\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_ae70e0262533a85acd1bae50b050ae908}{TEST\+\_\+\+CASE}} (\char`\"{}Tax and undo by \mbox{\hyperlink{classcoup_1_1Governor}{Governor}}\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_a9132a5380b4b53e98c28ef72897b63ee}{TEST\+\_\+\+CASE}} (\char`\"{}Spy blocks arrest\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_a1abb29e6365ac168100f99cf144ab231}{TEST\+\_\+\+CASE}} (\char`\"{}Baron invest\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_a8309dd61522a08c6723a6b0ade7ca8e9}{TEST\+\_\+\+CASE}} (\char`\"{}Coup not enough coins throws\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_a63ce98039ad33079392abeb81f3d1625}{TEST\+\_\+\+CASE}} (\char`\"{}Arrest twice on same player throws\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_a75c7803d0d551b7fc393e11d313bfb91}{TEST\+\_\+\+CASE}} (\char`\"{}Action when not your turn throws\char`\"{})
+\item 
+\mbox{\hyperlink{test_8cpp_aba838cd00794f0c392d0129acf5c8c30}{TEST\+\_\+\+CASE}} (\char`\"{}Turn rotation skips inactive players\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{test_8cpp_a623b8690a262536536a43eab2d7df03d}\label{test_8cpp_a623b8690a262536536a43eab2d7df03d}} 
+\index{test.cpp@{test.cpp}!DOCTEST\_CONFIG\_IMPLEMENT\_WITH\_MAIN@{DOCTEST\_CONFIG\_IMPLEMENT\_WITH\_MAIN}}
+\index{DOCTEST\_CONFIG\_IMPLEMENT\_WITH\_MAIN@{DOCTEST\_CONFIG\_IMPLEMENT\_WITH\_MAIN}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{DOCTEST\_CONFIG\_IMPLEMENT\_WITH\_MAIN}{DOCTEST\_CONFIG\_IMPLEMENT\_WITH\_MAIN}}
+{\footnotesize\ttfamily \#define DOCTEST\+\_\+\+CONFIG\+\_\+\+IMPLEMENT\+\_\+\+WITH\+\_\+\+MAIN}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test_8cpp_a75c7803d0d551b7fc393e11d313bfb91}\label{test_8cpp_a75c7803d0d551b7fc393e11d313bfb91}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Action when not your turn throws\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a63ce98039ad33079392abeb81f3d1625}\label{test_8cpp_a63ce98039ad33079392abeb81f3d1625}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Arrest twice on same player throws\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a04a9c9b11f48671ed9a5b91aed2265c4}\label{test_8cpp_a04a9c9b11f48671ed9a5b91aed2265c4}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Arrest\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a1abb29e6365ac168100f99cf144ab231}\label{test_8cpp_a1abb29e6365ac168100f99cf144ab231}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Baron invest\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a27af61f4d4b2816a38f712b0b49dba24}\label{test_8cpp_a27af61f4d4b2816a38f712b0b49dba24}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [5/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Bribe and extra turns\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_ab4389e7166ab891d834608b8f0285e97}\label{test_8cpp_ab4389e7166ab891d834608b8f0285e97}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [6/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Coup and undo by \mbox{\hyperlink{classcoup_1_1General}{General}}\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a8309dd61522a08c6723a6b0ade7ca8e9}\label{test_8cpp_a8309dd61522a08c6723a6b0ade7ca8e9}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [7/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Coup not enough coins throws\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_af7e3e3cb3737d7188df5f267a6ac0dc4}\label{test_8cpp_af7e3e3cb3737d7188df5f267a6ac0dc4}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [8/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Gather and Tax\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a17ca56e17c637366b418c00753cd0ece}\label{test_8cpp_a17ca56e17c637366b418c00753cd0ece}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [9/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Sanction \mbox{\hyperlink{classcoup_1_1Judge}{Judge}}\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_a9132a5380b4b53e98c28ef72897b63ee}\label{test_8cpp_a9132a5380b4b53e98c28ef72897b63ee}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [10/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Spy blocks arrest\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_ae70e0262533a85acd1bae50b050ae908}\label{test_8cpp_ae70e0262533a85acd1bae50b050ae908}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [11/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Tax and undo by \mbox{\hyperlink{classcoup_1_1Governor}{Governor}}\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{test_8cpp_aba838cd00794f0c392d0129acf5c8c30}\label{test_8cpp_aba838cd00794f0c392d0129acf5c8c30}} 
+\index{test.cpp@{test.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!test.cpp@{test.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [12/12]}}
+{\footnotesize\ttfamily TEST\+\_\+\+CASE (\begin{DoxyParamCaption}\item[{\char`\"{}Turn rotation skips inactive players\char`\"{}}]{ }\end{DoxyParamCaption})}
+

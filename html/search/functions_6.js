@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['game_971',['Game',['../classcoup_1_1Game.html#a4f442900b2cc019f3457b43580495c45',1,'coup::Game']]],
+  ['gather_972',['gather',['../classcoup_1_1Baron.html#a772b95aa4dabe27e3cee5ebda5987f77',1,'coup::Baron::gather()'],['../classcoup_1_1Player.html#a2d75d80735d4486232508fd1457c1792',1,'coup::Player::gather()']]],
+  ['general_973',['General',['../classcoup_1_1General.html#aa6650b52e62c3dffc218138af0b9603b',1,'coup::General']]],
+  ['get_5factive_5fcontexts_974',['get_active_contexts',['../structdoctest_1_1IReporter.html#a67a2da62d754d3b517d6d50ef210a988',1,'doctest::IReporter']]],
+  ['get_5fnum_5factive_5fcontexts_975',['get_num_active_contexts',['../structdoctest_1_1IReporter.html#a7d520de46d9104c0eeb02375fabad32d',1,'doctest::IReporter']]],
+  ['get_5fnum_5fstringified_5fcontexts_976',['get_num_stringified_contexts',['../structdoctest_1_1IReporter.html#ac8b96fef046edc609a3374a61b84797d',1,'doctest::IReporter']]],
+  ['get_5fstringified_5fcontexts_977',['get_stringified_contexts',['../structdoctest_1_1IReporter.html#acc1a86891876a957c6fc382af7894f99',1,'doctest::IReporter']]],
+  ['getcontextoptions_978',['getContextOptions',['../namespacedoctest.html#a1ff2f40fd17351e182820848e27e6c79',1,'doctest']]],
+  ['getcurrenttestsuite_979',['getCurrentTestSuite',['../namespacedoctest__detail__test__suite__ns.html#a3a236c82d51cd3622d14b00aa145df94',1,'doctest_detail_test_suite_ns']]],
+  ['getextraturns_980',['getExtraTurns',['../classcoup_1_1Player.html#aa1f666a9922c5831e79079737e5f4c93',1,'coup::Player']]],
+  ['getlastaction_981',['getLastAction',['../classcoup_1_1Game.html#a317b47b9afb2e08643d8218f1b698c17',1,'coup::Game']]],
+  ['getlastiblockedarrest_982',['getLastIBlockedArrest',['../classcoup_1_1Player.html#a6af1465e812dc476d92df423302f2d59',1,'coup::Player']]],
+  ['getlastplayer_983',['getLastPlayer',['../classcoup_1_1Game.html#a6ff7e4aead9d29f8a4bd6f4fb98bd463',1,'coup::Game']]],
+  ['getlasttarget_984',['getLastTarget',['../classcoup_1_1Game.html#a3265f651c838ed4eb3d2c038213f224a',1,'coup::Game']]],
+  ['getname_985',['getName',['../classcoup_1_1Player.html#a55d2ac7185afd9b49bff53174de34ef9',1,'coup::Player']]],
+  ['getplaerslist_986',['getPlaersList',['../classcoup_1_1Game.html#a31bdcee41b55718729ca9971ce2dc254',1,'coup::Game']]],
+  ['givebonus_987',['giveBonus',['../classcoup_1_1Merchant.html#a1bc5cb68e6ceaf1e0f19966683e67657',1,'coup::Merchant']]],
+  ['governor_988',['Governor',['../classcoup_1_1Governor.html#afce14c067ee364511c8cc45419944b9e',1,'coup::Governor']]]
+];

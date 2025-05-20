@@ -1,5 +1,3 @@
-// main.cpp
-
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
@@ -10,7 +8,7 @@
 
 #include "Game.hpp"
 #include "Player.hpp"
-#include "PlayerFactory.cpp"
+#include "PlayerFactory.hpp"
 #include "Governor.hpp"
 #include "General.hpp"
 #include "Judge.hpp"
@@ -21,7 +19,6 @@
 using namespace std;
 using namespace coup;
 
-// פונקציית עזר לטעינת פונטים
 sf::Font loadFont() {
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
@@ -41,7 +38,6 @@ string roleName(Player* p) {
     return "Unknown";
 }
 
-// פונקציית עזר לציור כפתורים
 void drawButton(sf::RenderWindow& window, sf::RectangleShape& button, sf::Text& label) {
     window.draw(button);
     window.draw(label);
@@ -50,17 +46,18 @@ void drawButton(sf::RenderWindow& window, sf::RectangleShape& button, sf::Text& 
 int main() {
     Game game;
     vector<unique_ptr<Player>> players;
+    std::vector<Player*> pendingUndoResponders;
+    string currentTurnPlayerName = "";
+
 
     sf::RenderWindow window(sf::VideoMode(1000, 700), "Coup Game - SFML GUI");
     sf::Font font = loadFont();
 
-    enum Screen { MENU, NAME_INPUT, GAME, SELECT_TARGET, UNDO_PROMPT, UNDO_SELECT_TARGET } screen = MENU;
+    enum Screen { MENU, NAME_INPUT, GAME, SELECT_TARGET, UNDO_PROMPT, UNDO_SELECT_TARGET ,WINNER_SCREEN } screen = MENU;
     string currentInput, pendingAction;
-    Player* selectedTarget = nullptr;
     Player* lastActor = nullptr;
     Player* undoResponder = nullptr;
 
-    // כפתורים למסך הראשי
     sf::RectangleShape addBtn(sf::Vector2f(200, 50));
     addBtn.setPosition(400, 200);
     addBtn.setFillColor(sf::Color::Green);
@@ -82,21 +79,9 @@ int main() {
     inputText.setPosition(420, 150);
     inputText.setFillColor(sf::Color::Cyan);
 
-    vector<string> actions = {"gather", "tax", "bribe", "invest", "coup", "arrest", "sanction", "undo"};
+    vector<string> actions;
     vector<sf::RectangleShape> actionButtons;
     vector<sf::Text> actionLabels;
-
-    for (size_t i = 0; i < actions.size(); ++i) {
-        sf::RectangleShape btn(sf::Vector2f(150, 40));
-        btn.setPosition(50, 100 + i * 50);
-        btn.setFillColor(sf::Color::Green);
-        actionButtons.push_back(btn);
-
-        sf::Text label(actions[i], font, 18);
-        label.setPosition(60, 110 + i * 50);
-        label.setFillColor(sf::Color::Black);
-        actionLabels.push_back(label);
-    }
 
     sf::Text turnText("", font, 22);
     turnText.setPosition(400, 30);
@@ -121,6 +106,10 @@ int main() {
     sf::Text undoPromptText("", font, 24);
     undoPromptText.setPosition(350, 200);
     undoPromptText.setFillColor(sf::Color::White);
+
+    sf::Text winnerText("", font, 30);
+    winnerText.setPosition(350, 300);
+    winnerText.setFillColor(sf::Color::Yellow);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -149,21 +138,92 @@ int main() {
                 if (addBtn.getGlobalBounds().contains(mouse) && players.size() < 6) {
                     screen = NAME_INPUT;
                 } else if (startBtn.getGlobalBounds().contains(mouse) && players.size() >= 2) {
-                    screen = GAME;
-                    game.currentPlayer()->startTurn();
+                    if (!game.players().empty()) {
+                        std::cout << "[DEBUG] Game players in memory after start:" << std::endl;
+                        for (Player* p : game.getPlaersList()) { 
+                            std::cout << " - " << p->getName() << " | addr: " << p;
+                            if (dynamic_cast<Judge*>(p)) std::cout << " [JUDGE]";
+                            std::cout << std::endl;
+                        }
+                        screen = GAME;
+                        game.currentPlayer()->startTurn();
+                    } else {
+                        std::cerr << "No players in the game (game.players() is empty)!" << std::endl;
+                    }
                 }
             }
 
             if (screen == UNDO_PROMPT && event.type == sf::Event::MouseButtonPressed) {
                 sf::Vector2f mouse(event.mouseButton.x, event.mouseButton.y);
+
                 if (yesBtn.getGlobalBounds().contains(mouse)) {
-                    if (auto* g = dynamic_cast<General*>(undoResponder)) g->undo(*lastActor);
-                    else if (auto* gov = dynamic_cast<Governor*>(undoResponder)) gov->undo(*lastActor);
-                    else if (auto* j = dynamic_cast<Judge*>(undoResponder)) j->undo(*lastActor);
-                    else if (auto* s = dynamic_cast<Spy*>(undoResponder)) s->blockArrest(*lastActor);
+                    if (auto* g = dynamic_cast<General*>(undoResponder)){
+                        try{
+                            g->undo(*game.getLastTarget());
+                            std::cout << g->getName() << " undo the coup " <<std::endl;
+
+                            game.nextTurn();
+                            pendingUndoResponders.clear();
+                            screen = GAME;
+                            currentTurnPlayerName = ""; 
+                        }catch(std::exception& e){
+                            c
+                            game.nextTurn();
+                            pendingUndoResponders.clear();
+                            screen = GAME;
+                        }
+                    }
+                    else if (auto* gov = dynamic_cast<Governor*>(undoResponder)){
+                        try{
+                            gov->undo(*game.getLastTarget());
+                            std::cout << gov->getName() << " undo the tax " <<std::endl;
+
+                            game.nextTurn();
+                            screen = GAME;
+                        }catch (std::exception& e) {
+                            std::cerr << "Undo error: " << e.what() << std::endl;
+                            game.nextTurn();
+                            pendingUndoResponders.clear();
+                            screen = GAME;
+                        }
+                    }
+                    else if (auto* j = dynamic_cast<Judge*>(undoResponder)){ 
+                        try{
+                            std::cout << "[DEBUG] Judge clicked yes" << std::endl;
+                            
+                            
+                            j->undo(*game.getLastTarget());
+                            std::cout << j->getName() << " undo the bribe " <<std::endl;
+                            game.nextTurn();
+                            
+                            screen = GAME;
+                        }catch(std::exception& e){
+                            std::cerr << "Undo error: " << e.what() << std::endl;
+                            game.nextTurn();
+                            pendingUndoResponders.clear();
+                            screen = GAME;
+                        }
+                    }
+          
+                    pendingUndoResponders.clear();
                     screen = GAME;
-                } else if (noBtn.getGlobalBounds().contains(mouse)) {
-                    screen = GAME;
+                
+                }
+
+                else if (noBtn.getGlobalBounds().contains(mouse)) {
+                    if (!pendingUndoResponders.empty()) {
+                        pendingUndoResponders.erase(pendingUndoResponders.begin());
+                    }
+                    if (!pendingUndoResponders.empty()) {
+                        undoResponder = pendingUndoResponders.front();
+                        screen = UNDO_PROMPT;
+                    } else {
+                        
+                        if (game.turn() == lastActor->getName()) {
+                            game.nextTurn();
+                        }
+                        screen = GAME;
+                    }
                 }
             }
 
@@ -171,24 +231,119 @@ int main() {
                 sf::Vector2f mouse(event.mouseButton.x, event.mouseButton.y);
                 for (size_t i = 0; i < targetButtons.size(); ++i) {
                     if (targetButtons[i].getGlobalBounds().contains(mouse)) {
+                        
+                        if (targetRefs.empty() || i >= targetRefs.size()) {
+                            screen = GAME;
+                            break;
+                        }
+                        
+                        
                         Player* current = game.currentPlayer();
                         Player* chosen = targetRefs[i];
                         try {
-                            if (pendingAction == "coup") current->coup(*chosen);
-                            else if (pendingAction == "arrest") {
-                                current->arrest(*chosen);
+                            if (pendingAction == "coup") {
+                                current->coup(*chosen);
+                                std::cout << current->getName() <<" make coup on " << chosen->getName() << "\n";
+
+                                std::vector<Player*> generals;
                                 for (auto& p : players) {
-                                    if (p.get() != current && dynamic_cast<Spy*>(p.get())) {
+                                    if (p.get() != current && dynamic_cast<General*>(p.get())) {
+                                        generals.push_back(p.get());
+                                    }
+                                }
+                                if (!generals.empty()) {
+                                    pendingUndoResponders = generals;
+                                    undoResponder = pendingUndoResponders.front();
+                                    lastActor = current;
+                                    screen = UNDO_PROMPT;
+                                    break;
+                                } else {
+                                    game.nextTurn(); 
+                                }
+                            }
+                            else if (pendingAction == "tax") {
+                                current->tax();
+                                std::cout << current->getName() <<" make tax "<< "\n";
+
+                                std::vector<Player*> governor;
+                                for (auto& p : players) {
+                                    if (p.get() != current && dynamic_cast<Governor*>(p.get())) {
+                                        governor.push_back(p.get());
+                                    }
+                                }
+                                if (!governor.empty()) {
+                                    pendingUndoResponders = governor;
+                                    undoResponder = pendingUndoResponders.front();
+                                    lastActor = current;
+                                    screen = UNDO_PROMPT;
+                                    break;
+                                } else {
+                                    game.nextTurn();
+                                    screen = GAME;
+                                }
+                            }
+                            else if (pendingAction == "bribe") {
+                                current->bribe();
+                                std::cout << current->getName() <<" make bribe "<< "\n";
+
+                                bool foundJudge = false;
+                                for (auto& p : players) {
+                                    if (p.get() != current && dynamic_cast<Judge*>(p.get())) {
                                         undoResponder = p.get();
-                                        lastActor = chosen;
+                                        lastActor = current;
                                         screen = UNDO_PROMPT;
+                                        foundJudge = true;
                                         break;
                                     }
                                 }
+
+                                if (!foundJudge) {
+                                    game.nextTurn(); 
+                                    screen = GAME;
+                                }
                             }
-                            else if (pendingAction == "sanction") current->sanction(*chosen);
-                        } catch (...) {}
-                        screen = GAME;
+                            else if (pendingAction == "arrest") {
+
+                                if(chosen != game.currentPlayer()->getLastTargetArrest()){
+                                    current->arrest(*chosen);
+                                    std::cout << current->getName() <<" make arrest on " << chosen->getName() << "\n";
+                                    game.nextTurn();
+                                    screen = GAME;
+                                }
+                                else{
+                                    std::cerr << "[ERROR] You can't arrest the same player twice in a row" << std::endl;
+                                    screen = GAME;
+                                    pendingAction = "";
+                                }
+
+                            }
+                            else if (pendingAction == "sanction") {
+                                current->sanction(*chosen);
+                                std::cout << current->getName() <<" make sanction on " << chosen->getName() << "\n";
+                                game.nextTurn(); // =====---====
+                                screen = GAME;
+                            }
+                            else if (pendingAction == "block arrest") {
+                                if (auto* s = dynamic_cast<Spy*>(current)) {
+                                    s->blockArrest(*chosen);
+                                    std::cout << current->getName() <<" make block arrest on " << chosen->getName() << "\n";
+                                    game.nextTurn(); // =====---====
+                                    screen = GAME;
+                                }
+
+
+                            }
+
+                        
+                            if (screen != UNDO_PROMPT) {
+                                screen = GAME;
+                            }
+                        } catch (std::exception& e) {
+                            std::cerr << "Error: " << e.what() << std::endl;
+                            game.nextTurn(); 
+                            screen = GAME;
+                        }
+
                         break;
                     }
                 }
@@ -199,65 +354,91 @@ int main() {
                 for (size_t i = 0; i < actionButtons.size(); ++i) {
                     if (actionButtons[i].getGlobalBounds().contains(mouse)) {
                         string action = actions[i];
+                        std::cout << "Clicked on action: " << action << std::endl;
                         Player* current = game.currentPlayer();
-                        if (current->coins() >= 10) {
-                            pendingAction = "coup";                                // חייב לבצע Coup → הצג בחירת יעד
+                        
+                        // if (current->coins() >= 10) {
+                        //     pendingAction = "coup";                                // חייב לבצע Coup → הצג בחירת יעד
                     
-                            targetButtons.clear();
-                            targetLabels.clear();
-                            targetRefs.clear();
-                            for (auto& p : players) {
-                                if (p.get() != current && p->isInGame()) {
-                                    sf::RectangleShape btn(sf::Vector2f(120, 40));
-                                    btn.setPosition(400, 150 + targetButtons.size() * 50);
-                                    targetButtons.push_back(btn);
+                        //     targetButtons.clear();
+                        //     targetLabels.clear();
+                        //     targetRefs.clear();
+                        //     for (auto& p : players) {
+                        //         if (p.get() != current && p->isInGame()) {
+                        //             sf::RectangleShape btn(sf::Vector2f(120, 40));
+                        //             btn.setPosition(400, 150 + targetButtons.size() * 50);
+                        //             targetButtons.push_back(btn);
 
-                                    sf::Text lbl(p->getName(), font, 18);
-                                    lbl.setPosition(410, 160 + targetLabels.size() * 50);
-                                    lbl.setFillColor(sf::Color::Black);
-                                    targetLabels.push_back(lbl);
+                        //             sf::Text lbl(p->getName(), font, 18);
+                        //             lbl.setPosition(410, 160 + targetLabels.size() * 50);
+                        //             lbl.setFillColor(sf::Color::Black);
+                        //             targetLabels.push_back(lbl);
 
-                                    targetRefs.push_back(p.get());
-                                }
-                            }
-                        screen = SELECT_TARGET;
-                        continue;  // לא מאפשר לבצע שום פעולה אחרת
-                        }
+                        //             targetRefs.push_back(p.get());
+                        //         }
+                        //     }
+                        // screen = SELECT_TARGET;
+                        // continue;  
+                        // }
 
                         
                         try {
-                            if (action == "gather") current->gather();
+                            if (action == "gather"){
+                                current->gather();
+                                std::cout << current->getName() << " make gather " <<std::endl;
+
+                                game.nextTurn();
+                            }
                             else if (action == "tax") {
                                 current->tax();
+                                std::cout << current->getName() << " make tax " <<std::endl;
+
+                                bool findPlayer = false;
                                 for (auto& p : players) {
                                     if (p.get() != current && dynamic_cast<Governor*>(p.get())) {
+                                        findPlayer = true;
                                         undoResponder = p.get();
                                         lastActor = current;
                                         screen = UNDO_PROMPT;
                                         break;
                                     }
+                                }
+                                if(!findPlayer){
+                                    game.nextTurn();
                                 }
                             }
                             else if (action == "bribe") {
+                                bool findPlayer = false;
                                 current->bribe();
+                                std::cout << current->getName() << " make bribe " <<std::endl;
+
                                 for (auto& p : players) {
                                     if (p.get() != current && dynamic_cast<Judge*>(p.get())) {
+                                        findPlayer = true;
                                         undoResponder = p.get();
                                         lastActor = current;
                                         screen = UNDO_PROMPT;
                                         break;
                                     }
                                 }
+                                if(!findPlayer){
+                                    game.nextTurn();
+                                }
                             }
                             else if (action == "invest") {
-                                if (auto* b = dynamic_cast<Baron*>(current)) b->invest();
+                                if (auto* b = dynamic_cast<Baron*>(current)){
+                                    b->invest();
+                                    std::cout << current->getName() << " make invest " <<std::endl;
+
+                                    game.nextTurn();
+                                }
                             }
                             else if (action == "undo") {
                                 undoResponder = current;
                                 lastActor = game.getLastPlayer();
                                 screen = UNDO_PROMPT;
                             }
-                            else if (action == "arrest" || action == "sanction" || action == "coup") {
+                            else if (action == "arrest" || action == "sanction" || action == "coup" || action == "block arrest") {
                                 pendingAction = action;
                                 targetButtons.clear();
                                 targetLabels.clear();
@@ -276,7 +457,22 @@ int main() {
                                         targetRefs.push_back(p.get());
                                     }
                                 }
-                                screen = SELECT_TARGET;
+                                std::cout << "Targets found: " << targetRefs.size() << std::endl;
+                                if (targetRefs.empty()) {
+                                    std::cerr << "No valid targets for action: " << action << std::endl;                                    
+                                    screen = GAME;
+                                } else {
+                                    std::cout << "[DEBUG] switching to SELECT_TARGET for " << action << std::endl;
+                                    screen = SELECT_TARGET;
+
+                                }
+                            }
+                            else if (action == "pass") {
+                                try {
+                                    current->pass();
+                                } catch (std::exception& e) {
+                                    cerr << "Pass error: " << e.what() << endl;
+                                }
                             }
                         } catch (std::exception& e) {
                             cerr << "Action error: " << e.what() << endl;
@@ -297,19 +493,109 @@ int main() {
             window.draw(prompt);
             window.draw(inputText);
         } else if (screen == GAME) {
-            turnText.setString("Turn: " + game.turn());
+    
+            if (game.players().size() > 1) {
+                Player* current = game.currentPlayer();
+
+                if (current->getName() != currentTurnPlayerName ) {
+                    currentTurnPlayerName = current->getName();
+                    
+                    actions.clear();
+                    actionButtons.clear();
+                    actionLabels.clear();
+
+                    if (current->coins() >= 10) {
+                        actions.push_back("coup");
+                    }
+                    else {
+                    
+                        if (dynamic_cast<Baron*>(current) || !current->isSanctionBlocked()) {
+                            actions.push_back("gather");
+                            actions.push_back("tax");
+                        }
+                        if(current->coins() >= 4){
+                            actions.push_back("bribe");
+                        }
+                        if(current->coins() >= 3){
+                            actions.push_back("sanction");
+                        }
+                        if (current->coins() >= 7) {
+                            actions.push_back("coup");
+                        }
+                        if (!current->isArrestBlocked()) {
+                            actions.push_back("arrest");
+                        }
+                        if (dynamic_cast<Baron*>(current) && current->coins() >= 3){
+                            actions.push_back("invest");
+                        }
+                        if (dynamic_cast<Spy*>(current)) {
+                            actions.push_back("block arrest");
+                        }
+
+                        if (actions.empty()) {
+                            actions.push_back("pass");
+                        }
+
+                    }
+
+                    actionButtons.clear();
+                    actionLabels.clear();
+                    for (size_t i = 0; i < actions.size(); ++i) {
+                        sf::RectangleShape btn(sf::Vector2f(150, 40));
+                        btn.setPosition(50, 100 + i * 50);
+                        btn.setFillColor(sf::Color::Green);
+                        actionButtons.push_back(btn);
+
+                        sf::Text label(actions[i], font, 18);
+                        label.setPosition(60, 110 + i * 50);
+                        label.setFillColor(sf::Color::Black);
+                        actionLabels.push_back(label);
+                    }
+                
+                }
+                turnText.setString("Turn: " + game.turn());
+            }
+            else if (game.players().size() == 1){
+                turnText.setString("The winner is" + game.winner());
+            }
             window.draw(turnText);
             for (size_t i = 0; i < actionButtons.size(); ++i) {
                 drawButton(window, actionButtons[i], actionLabels[i]);
             }
+
             float y = 400;
+
+            Player* current = game.currentPlayer();
+            bool isSpy = dynamic_cast<Spy*>(current);
             for (auto& p : players) {
                 if (p->isInGame()) {
-                    sf::Text status(p->getName() + " - " + roleName(p.get()) + " (" + to_string(p->coins()) + " coins)", font, 18);
+
+                    std::string coinInfo;
+                    
+                    if (p.get() == current) {
+                        coinInfo = " (" + std::to_string(p->coins()) + " coins)";
+                    }
+                    else if (isSpy) {
+                        coinInfo = " (" + std::to_string(p->coins()) + " coins)";
+                    }
+                    else {
+                        coinInfo = " (-- coins)";
+                    }
+
+                    sf::Text status(p->getName() + " - " + roleName(p.get()) + coinInfo, font, 18);
                     status.setPosition(600, y);
                     status.setFillColor(sf::Color::White);
                     window.draw(status);
                     y += 30;
+                }
+            }
+            if (game.players().size() == 1) {
+                try {
+                    std::string winner = game.winner();
+                    winnerText.setString("Winner: " + winner);
+                    screen = WINNER_SCREEN;
+                } catch (...) {
+                    
                 }
             }
         } else if (screen == SELECT_TARGET || screen == UNDO_SELECT_TARGET) {
@@ -317,10 +603,13 @@ int main() {
                 drawButton(window, targetButtons[i], targetLabels[i]);
             }
         } else if (screen == UNDO_PROMPT) {
-            undoPromptText.setString(undoResponder->getName() + ": Undo this action?");
+            undoPromptText.setString(undoResponder->getName() + " : Undo this action? ( " +game.getLastAction()+ ")");
             window.draw(undoPromptText);
             drawButton(window, yesBtn, yesLbl);
             drawButton(window, noBtn, noLbl);
+        }
+        else if (screen == WINNER_SCREEN) {
+            window.draw(winnerText);
         }
 
         window.display();

@@ -1,12 +1,14 @@
 #include "General.hpp"
 #include "Game.hpp"
 #include <stdexcept>
-
+#include <iostream>
 
 
 namespace coup {
 
-    General::General(Game& game, const std::string& name)  :Player(game, name){}
+    General::General(Game& game, const std::string& name)  :Player(game, name){
+        //undoTheCoup = false;
+    }
 
     void General::undo(Player& target){
 
@@ -16,14 +18,10 @@ namespace coup {
         }
 
         //Checks if undo is to the correct player
-        if (game->getLastPlayer() != &target){
+        if (game->getLastTarget() != &target){
             throw std::runtime_error("The target player is incorrect");
         }
-
-        if (!undoTheCoup) {
-            throw std::runtime_error("General is dont want to block coup");
-        }
-
+        
         if (coins() < 5){
             throw std::runtime_error ("Not enough coins");
         }
@@ -31,25 +29,16 @@ namespace coup {
         subCoins(5);
 
         target.setInGame(true);
-        undoTheCoup = false;
-
+        //undoTheCoup = false;
         game->setLastAction("");
         game->setLastPlayer(nullptr);
-        game->nextTurn();
     }
 
-        
-    bool General::isCoupUndo ()const {
-        return undoTheCoup;
-    }
-        
-    void General::setUndo(bool x){
-        undoTheCoup = x;
-    }
-
-    // void General::ReturnsCoin(Player& target){
-    //     target.subCoins(1);
-    //     addCoins(1);\\\\\\\\\\\\\
+    // bool General::isCoupUndo ()const {
+    //     return undoTheCoup;
     // }
-
+        
+    // void General::setUndo(bool x){
+    //     undoTheCoup = x;
+    // }
 }

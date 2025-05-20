@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['balance_18',['balance',['../classcoup_1_1Player.html#ac8bfcfbc13083ad3de9bcac147092d19',1,'coup::Player']]],
+  ['baron_19',['Baron',['../classcoup_1_1Baron.html#afcf862f70e403e5a10aa9e8a7a8c9f97',1,'coup::Baron::Baron()'],['../classcoup_1_1Baron.html',1,'coup::Baron']]],
+  ['baron_2ecpp_20',['Baron.cpp',['../Baron_8cpp.html',1,'']]],
+  ['baron_2ehpp_21',['Baron.hpp',['../Baron_8hpp.html',1,'']]],
+  ['basic_5fistream_22',['basic_istream',['../classstd_1_1basic__istream.html',1,'std']]],
+  ['basic_5fostream_23',['basic_ostream',['../classstd_1_1basic__ostream.html',1,'std']]],
+  ['binary_5fassert_24',['binary_assert',['../structdoctest_1_1detail_1_1ResultBuilder.html#aa920a0617a26939d7adcd1ba2dec0e85',1,'doctest::detail::ResultBuilder::binary_assert()'],['../namespacedoctest_1_1detail.html#a1e295c708d2de0e47ac89c1632211159',1,'doctest::detail::binary_assert()']]],
+  ['binary_5fname_25',['binary_name',['../structdoctest_1_1ContextOptions.html#a0590006b4d10296c9a697e32ff886f74',1,'doctest::ContextOptions']]],
+  ['blockarrest_26',['blockArrest',['../classcoup_1_1Spy.html#a80010474ab5e6593e3f3ef0ca8cbb32f',1,'coup::Spy']]],
+  ['blue_27',['Blue',['../namespacedoctest_1_1Color.html#a32e9eaf6013139846e848af6e6cf2b92aada3ad8958b1319450cc20f3f8e5e2d6',1,'doctest::Color']]],
+  ['bribe_28',['bribe',['../classcoup_1_1Player.html#a5bd9fe1f6685f7bf28877ff6dc73a8e1',1,'coup::Player']]],
+  ['bright_29',['Bright',['../namespacedoctest_1_1Color.html#a32e9eaf6013139846e848af6e6cf2b92a7659647d16a78c607f9bafaa207b9e07',1,'doctest::Color']]],
+  ['brightgreen_30',['BrightGreen',['../namespacedoctest_1_1Color.html#a32e9eaf6013139846e848af6e6cf2b92a016090b96620a42a63dadf0265977664',1,'doctest::Color']]],
+  ['brightred_31',['BrightRed',['../namespacedoctest_1_1Color.html#a32e9eaf6013139846e848af6e6cf2b92a236dfdbcd49d10dbf1a31f9e2947a671',1,'doctest::Color']]],
+  ['brightwhite_32',['BrightWhite',['../namespacedoctest_1_1Color.html#a32e9eaf6013139846e848af6e6cf2b92a4f80853796b4875d61ff5e4ad138492e',1,'doctest::Color']]],
+  ['buf_33',['buf',['../classdoctest_1_1String.html#a7e031ced488588936a540eba26facf67',1,'doctest::String']]]
+];

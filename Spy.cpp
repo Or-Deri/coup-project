@@ -1,5 +1,4 @@
 #include "Spy.hpp"
-#include "Player.hpp"
 #include "Game.hpp"
 #include <stdexcept>
 
@@ -9,19 +8,15 @@
 namespace coup {
 
     Spy::Spy(Game& game, const std::string& name): Player(game, name){
-        lastBlockedByArrest = nullptr;
+        lastBlockedArrest = nullptr;
     }
+
 
 
     void Spy::startTurn(){
         
         if (game->turn() != getName()) {
-            throw std::runtime_error("Not spy's turn");
-        }
-
-        if (lastBlockedByArrest != nullptr){
-            lastBlockedByArrest->setArrestBlocked(false);
-            lastBlockedByArrest = nullptr;
+            throw std::runtime_error("It is not your turn");
         }
 
         //If a player was blocked by sanction in the previous turn, the block is removed
@@ -30,25 +25,24 @@ namespace coup {
             lastBlockedBySanction = nullptr;
         }
 
-
-        // מבקש מהמשתמש שחקן מטרה מתוך השחקנים שמשחקים 
-        //seeCoins(target);
-        //blockArrest(target)
-
-
+        if (lastBlockedArrest != nullptr){
+            lastBlockedArrest->setArrestBlocked(false);
+            lastBlockedArrest = nullptr;
+        }
     }
 
-    void Spy::blockArrest(Player& target){
+    void Spy::blockArrest(Player& target){ 
         
+        if (coins() >= 10) {
+            throw std::runtime_error("You must perform a coup this turn");
+        }
 
-        seeCoins(target);
+        setLastTargetArrest(nullptr);
+        game->setLastTarget(nullptr);
+        game->setLastAction("blockArrest");
+        game->setLastPlayer(this);
 
         target.setArrestBlocked(true);
-        lastBlockedByArrest = &target; // נרשום כדי שנוכל לנקות אחר כך
+        lastBlockedArrest = &target; 
     }
-
-    int Spy::seeCoins(Player& target) const {
-        return target.coins();
-    }
-
 }
