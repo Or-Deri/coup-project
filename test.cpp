@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
@@ -51,6 +52,15 @@ TEST_CASE("Bribe") {
 
     CHECK(governor.coins() == 0);
     CHECK(governor.getExtraTurns() == 2);
+}
+TEST_CASE("Bribe - not enough coins") {
+    Game game;
+    General general(game, "A");
+    
+    general.addCoins(3);
+
+    game.currentPlayer()->startTurn();    //A -general
+    CHECK_THROWS(game.currentPlayer()->bribe()); // bribe cost 3 coins
 }
 
 TEST_CASE("Arrest") {
@@ -144,6 +154,22 @@ TEST_CASE("Sanction") {
     CHECK(merchant.coins() == 1);
 }
 
+TEST_CASE("Sanction - not enough coins") {
+    Game game;
+    General general(game, "A");
+    Judge judge(game, "B");
+
+    general.addCoins(3);
+    judge.addCoins(2);
+
+    game.currentPlayer()->startTurn();    //A -general
+    CHECK_THROWS(game.currentPlayer()->sanction(judge)); // Sanction on judge cost 4 coins
+    game.nextTurn();
+
+    game.currentPlayer()->startTurn();     //B -judge
+    CHECK_THROWS(game.currentPlayer()->sanction(general)); //Sanction cost 3 coins
+}
+
 TEST_CASE("Coup") {
     Game game;
     Baron baron(game, "A");
@@ -154,9 +180,20 @@ TEST_CASE("Coup") {
     game.currentPlayer()->startTurn(); // A - baron
     game.currentPlayer()->coup(judge);
 
-    CHECK_FALSE(judge.isInGame());
+    CHECK_FALSE(judge.getInGame());
     CHECK(baron.coins() == 0);
 }
+
+TEST_CASE("Coup - player performs on himself"){
+    Game game;
+    Merchant merchant(game, "A");
+
+    merchant.addCoins(7);
+
+    game.currentPlayer()->startTurn(); // A - merchant
+    CHECK_THROWS(game.currentPlayer()->coup(merchant));
+}
+
 
 TEST_CASE("Tax by Governor") {
     Game game;
@@ -188,6 +225,24 @@ TEST_CASE("Undo Tax by Governor") {
 
     governor2.undo(governor1);
     CHECK(governor1.coins() == 0);
+}
+
+TEST_CASE("Undo Tax by Governor who has out of the game") {
+    Game game;
+    Merchant merchant(game, "A");
+    Governor governor(game, "B");
+    Spy spy(game, "C");
+    
+    merchant.addCoins(7);
+    
+    game.currentPlayer()->startTurn();          // A - merchant
+    game.currentPlayer()->coup(governor);      // coup on B
+    game.nextTurn();
+
+    game.currentPlayer()->startTurn();    // C - spy 
+    game.currentPlayer()->tax();         
+     
+    CHECK_THROWS(governor.undo(spy));  // B is not in  the game
 }
 
 TEST_CASE("Spy blocks arrest") {
@@ -255,12 +310,31 @@ TEST_CASE("Undo coup by General") {
 
     game.currentPlayer()->startTurn();  // A- baron
     game.currentPlayer()->coup(general);
-    CHECK_FALSE(general.isInGame());
+    CHECK_FALSE(general.getInGame());
 
     general.undo(*game.getLastTarget()); // B- general
-    CHECK(baron.isInGame());
+    CHECK(baron.getInGame());
     CHECK(baron.coins() == 0);
     CHECK(general.coins() == 0);
+}
+TEST_CASE("Undo coup by General who has out of the game") {
+    Game game;
+    Merchant merchant(game, "A");
+    General general(game, "B");
+    Spy spy(game, "C");
+    
+    merchant.addCoins(7);
+    general.addCoins(5);      // for the undo
+    spy.addCoins(7);
+
+    game.currentPlayer()->startTurn();          // A - merchant
+    game.currentPlayer()->coup(general);      // coup on B
+    game.nextTurn();
+
+    game.currentPlayer()->startTurn();    // C - spy 
+    game.currentPlayer()->coup(merchant);         
+     
+    CHECK_THROWS(general.undo(merchant));  // B is not in  the game
 }
 TEST_CASE("Undo coup with not enough coins") {
     Game game;
@@ -271,7 +345,7 @@ TEST_CASE("Undo coup with not enough coins") {
     
     game.currentPlayer()->startTurn();  // A- baron
     game.currentPlayer()->coup(general);
-    CHECK_FALSE(general.isInGame());
+    CHECK_FALSE(general.getInGame());
 
     CHECK_THROWS(general.undo(baron));
 }
@@ -321,6 +395,25 @@ TEST_CASE("Undo bribe by judge"){
     CHECK(baron.getExtraTurns() == 0);
     CHECK(baron.coins() == 0);
 }
+TEST_CASE("Undo bribe by judge who has out of the game") {
+    Game game;
+    Merchant merchant(game, "A");
+    Judge judge(game, "B");
+    Spy spy(game, "C");
+    
+    merchant.addCoins(7);
+    spy.addCoins(4);
+    
+    game.currentPlayer()->startTurn();          // A - merchant
+    game.currentPlayer()->coup(judge);      // coup on B
+    game.nextTurn();
+
+    game.currentPlayer()->startTurn();    // C - spy 
+    game.currentPlayer()->bribe();         
+     
+    CHECK_THROWS(judge.undo(spy));  // B is not in  the game
+}
+
 
 TEST_CASE("Merchant receives bonuses"){
     Game game;
@@ -347,15 +440,15 @@ TEST_CASE("Merchant arrest"){
     CHECK(merchant.coins() == 0);
 }
 
-TEST_CASE("Coup not enough coins") {
+
+
+TEST_CASE("Bribe not enough coins") {
     Game game;
     General general(game, "A");
-    Judge judge(game, "B");
 
-    general.startTurn();
-    CHECK_THROWS(general.coup(judge));
+    game.currentPlayer()->startTurn();
+    CHECK_THROWS(game.currentPlayer()->bribe());
 }
-
 
 
 TEST_CASE("Action when not your turn ") {
@@ -384,3 +477,93 @@ TEST_CASE("Turn rotation skips inactive players") {
 
     CHECK(game.turn() == "A");
 } 
+
+TEST_CASE("Winner function"){
+    Game game;
+    Spy spy(game, "A");
+    Judge judge(game, "B");
+
+    judge.addCoins(7);
+
+    game.currentPlayer()->startTurn(); //A -spy
+    game.currentPlayer()->tax();
+    game.nextTurn();
+
+    game.currentPlayer()->startTurn(); //B -judge
+    game.currentPlayer()->coup(spy);
+    game.nextTurn();
+
+    CHECK(game.winner() == judge.getName());
+} 
+
+TEST_CASE("Winner function- there is no winner yet"){
+    Game game;
+    Baron baron(game, "A");
+    Judge judge(game, "B");
+
+    game.currentPlayer()->startTurn(); //A -baron
+    game.currentPlayer()->tax();
+    game.nextTurn();
+
+    game.currentPlayer()->startTurn(); //B -judge
+    game.currentPlayer()->tax();
+    game.nextTurn();
+    
+    CHECK_THROWS(game.winner());
+} 
+
+TEST_CASE("Add more 6 players in game") {
+    Game game;
+    Spy spy(game, "A");
+    Judge judge(game, "B");
+    Baron baron(game, "C");
+    General general(game, "D");
+    Merchant merchant(game,"E");
+    Governor governor(game, "F");
+
+    CHECK(game.playersInTheGame() == 6);
+    CHECK_THROWS(new Governor(game, "G"));
+    
+}
+
+TEST_CASE("Playres - returns active players") {
+    Game game;
+    Spy spy(game, "A");
+    Judge judge(game, "B");
+    Baron baron(game, "C");
+    General general(game, "D");
+    Merchant merchant(game,"E");
+    Governor governor(game, "F");
+
+    CHECK(game.playersInTheGame() == 6);
+
+    spy.addCoins(7);
+    game.currentPlayer()->startTurn();
+    game.currentPlayer()->coup(merchant);
+    game.nextTurn();
+
+    CHECK(game.playersInTheGame() == 5);
+}
+
+TEST_CASE("Playre With 10 or more coins  make action that is not copu") {
+    Game game;
+    Spy spy(game, "A");
+    Baron baron(game, "B");
+
+    spy.addCoins(10);
+    baron.addCoins(12);
+
+    CHECK_THROWS(spy.gather());
+    CHECK_THROWS(spy.tax());
+    CHECK_THROWS(spy.bribe());
+    CHECK_THROWS(spy.arrest(baron));
+    CHECK_THROWS(spy.sanction(baron));
+    CHECK_THROWS(spy.blockArrest(baron));
+
+    CHECK_THROWS(baron.gather());
+    CHECK_THROWS(baron.tax());
+    CHECK_THROWS(baron.bribe());
+    CHECK_THROWS(baron.arrest(spy));
+    CHECK_THROWS(baron.sanction(spy));
+    CHECK_THROWS(baron.invest());
+}

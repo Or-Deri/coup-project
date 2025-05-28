@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #include "Spy.hpp"
 #include "Game.hpp"
 #include <stdexcept>
@@ -7,11 +8,7 @@
 
 namespace coup {
 
-    Spy::Spy(Game& game, const std::string& name): Player(game, name){
-        lastBlockedArrest = nullptr;
-    }
-
-
+    Spy::Spy(Game& game, const std::string& name): Player(game, name){}
 
     void Spy::startTurn(){
         
@@ -20,15 +17,18 @@ namespace coup {
         }
 
         //If a player was blocked by sanction in the previous turn, the block is removed
-        if (lastBlockedBySanction != nullptr){
-            lastBlockedBySanction->setSanctionBlocked(false);
-            lastBlockedBySanction = nullptr;
+        if (lastSanctionedTarget != nullptr){
+            lastSanctionedTarget->setSanctionBlocked(false);
+            lastSanctionedTarget = nullptr;
         }
 
-        if (lastBlockedArrest != nullptr){
-            lastBlockedArrest->setArrestBlocked(false);
-            lastBlockedArrest = nullptr;
+        for (Player* p : lastBlockedArrestLlist){
+            if (p != nullptr) {
+                p->setArrestBlocked(false);
+            }
         }
+        lastBlockedArrestLlist.clear();
+
     }
 
     void Spy::blockArrest(Player& target){ 
@@ -39,10 +39,10 @@ namespace coup {
 
         setLastTargetArrest(nullptr);
         game->setLastTarget(nullptr);
-        game->setLastAction("blockArrest");
+        game->setLastAction("block arrest");
         game->setLastPlayer(this);
 
         target.setArrestBlocked(true);
-        lastBlockedArrest = &target; 
+        lastBlockedArrestLlist.push_back(&target);
     }
 }

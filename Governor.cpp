@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #include "Governor.hpp"
 #include "Player.hpp"
 #include "Game.hpp"
@@ -8,15 +9,6 @@ namespace coup {
  
     Governor::Governor(Game& game, const std::string& name): Player(game, name)  {}
     
-
-    // void Governor::setUndo(bool x){
-    //     undoTheTax = x;
-    // }
-
-    // bool Governor::isTaxUndo() const{
-    //     return undoTheTax;
-    // }
-
     void Governor::undo(Player& target){
  
         if (game->getLastAction() != "tax"){ 
@@ -26,6 +18,12 @@ namespace coup {
         if(game->getLastTarget() != &target) {               
             throw std::runtime_error("The target player is incorrect");
         }
+
+        if(!this->getInGame()) {               
+            throw std::runtime_error("A Governor who has left the game cannot undo tax");
+        }
+
+
         Governor* governor = dynamic_cast<Governor*>(game->getLastTarget());
         if(governor){                   // If the player is Governor, he received 3 coins 
             target.subCoins(3);
@@ -33,8 +31,6 @@ namespace coup {
         else{                          // Everyone else gets 2 coins
             target.subCoins(2);
         }
-
-        //setUndo(false);
 
         game->setLastAction("");
         game->setLastPlayer(nullptr);
@@ -56,8 +52,8 @@ namespace coup {
         }
 
         addCoins(3);
+        
         setLastTargetArrest(nullptr);
-
         game->setLastAction("tax");
         game->setLastPlayer(this);
         game->setLastTarget(this);

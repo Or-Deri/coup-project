@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #include "Game.hpp"
 #include "Player.hpp"
 #include "Governor.hpp"
@@ -21,7 +22,7 @@ namespace coup {
         game.addPlayer(this);
         this->arrestBlocked = false;
         this->sanctionBlocked = false;
-        this->lastBlockedBySanction = nullptr;
+        this->lastSanctionedTarget = nullptr;
         this->extraTurns = 0;
         this->lastTargetArrest = nullptr;
     }
@@ -31,35 +32,60 @@ namespace coup {
         return name;
     }
 
-
+    Player::~Player(){}
+    
+    Player::Player(const Player& other){    
+        name = other.name;
+        game = other.game;
+        balance = other.balance;
+        inGame = other.inGame;
+        arrestBlocked = other.arrestBlocked;
+        sanctionBlocked =  other.sanctionBlocked;
+        lastSanctionedTarget = other.lastSanctionedTarget;
+        extraTurns = other.extraTurns;
+        lastTargetArrest = other.lastTargetArrest;
+        game->addPlayer(this);
+    }
+   
+    Player& Player::operator=(const Player& other) {
+        if (this != &other) {
+            name = other.name;
+            game = other.game;
+            balance = other.balance;
+            inGame = other.inGame;
+            arrestBlocked = other.arrestBlocked;
+            sanctionBlocked = other.sanctionBlocked;
+            lastSanctionedTarget = other.lastSanctionedTarget;
+            extraTurns = other.extraTurns;
+            lastTargetArrest = other.lastTargetArrest;      
+        }
+        return *this;
+    }
+ 
     int Player::coins() const{
         return balance;
     }
-
     void Player::addCoins(int x){
         balance += x;
     }
-
     void Player::subCoins(int x){
         balance -= x;
     }
 
-    bool Player::isInGame() const{
+    bool Player::getInGame() const{
         return inGame;
     }
-
     void Player::setInGame(bool x){
         inGame = x;
     }
 
-    
     int Player::getExtraTurns(){
+
         return extraTurns;
     }
     void Player::subExtraTurns(){
         extraTurns--;
     }
-
     void Player::setExtraTurns(int x){
         extraTurns = x;
     }
@@ -78,8 +104,6 @@ namespace coup {
         return sanctionBlocked ;
     }
 
-
-
     Player* Player::getLastTargetArrest() const{
         return lastTargetArrest;
     }
@@ -87,17 +111,15 @@ namespace coup {
         lastTargetArrest = target;
     }
 
-
-
     void Player::startTurn(){   
         if (game->turn() != getName()) {
             throw std::runtime_error("It is not your turn");
         }
 
         //If a player was blocked by sanction in the previous turn, the block is removed
-        if (lastBlockedBySanction != nullptr){
-            lastBlockedBySanction->setSanctionBlocked(false);
-            lastBlockedBySanction = nullptr;
+        if (lastSanctionedTarget != nullptr){
+            lastSanctionedTarget->setSanctionBlocked(false);
+            lastSanctionedTarget = nullptr;
         }
     }
 
@@ -250,7 +272,7 @@ namespace coup {
         target.setSanctionBlocked(true); 
         setLastTargetArrest(nullptr);
 
-        lastBlockedBySanction = &target;
+        lastSanctionedTarget = &target;
         game->setLastTarget(&target);
         game->setLastAction("sanction");
         game->setLastPlayer(this);
@@ -259,6 +281,10 @@ namespace coup {
     void Player::coup(Player& target){
         if (game->turn() != getName()) {
             throw std::runtime_error("It is not your turn");
+        }
+
+        if(this == &target){
+            throw std::runtime_error("Player cannot make coup on himself");
         }
         
         if (coins() < 7) {

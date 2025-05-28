@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #pragma once
 #include "Player.hpp"
 
@@ -5,16 +6,9 @@ namespace coup {
 
     class Governor : public Player {
 
-        private:
-        
-            //bool undoTheTax = false;
-        
         public:
         
             Governor(Game& game, const std::string& name);
-        
-            //void setUndo(bool x);
-            //bool isTaxUndo() const;
 
             /**
             * @brief Undoes a tax action performed by another player, removing the coins they gained.

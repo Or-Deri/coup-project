@@ -22,7 +22,7 @@ var searchData=
   ['getlastplayer_445',['getLastPlayer',['../classcoup_1_1Game.html#a6ff7e4aead9d29f8a4bd6f4fb98bd463',1,'coup::Game']]],
   ['getlasttarget_446',['getLastTarget',['../classcoup_1_1Game.html#a3265f651c838ed4eb3d2c038213f224a',1,'coup::Game']]],
   ['getname_447',['getName',['../classcoup_1_1Player.html#a55d2ac7185afd9b49bff53174de34ef9',1,'coup::Player']]],
-  ['getplaerslist_448',['getPlaersList',['../classcoup_1_1Game.html#a31bdcee41b55718729ca9971ce2dc254',1,'coup::Game']]],
+  ['getplaerslist_448',['getPlayersList',['../classcoup_1_1Game.html#a31bdcee41b55718729ca9971ce2dc254',1,'coup::Game']]],
   ['givebonus_449',['giveBonus',['../classcoup_1_1Merchant.html#a1bc5cb68e6ceaf1e0f19966683e67657',1,'coup::Merchant']]],
   ['given_450',['GIVEN',['../doctest_8h.html#a6fdd23caff3293146ba6929b2d77465a',1,'doctest.h']]],
   ['gnu_5ffile_5fline_451',['gnu_file_line',['../structdoctest_1_1ContextOptions.html#aab894e731a6fc86cf095288ec7d0c0f2',1,'doctest::ContextOptions']]],

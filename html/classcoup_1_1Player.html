@@ -98,7 +98,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9ba7313d02432b718b66d3108ce7d526"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0958e06bfc57062603761e67765e78d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoup_1_1Player.html#ac0958e06bfc57062603761e67765e78d">subCoins</a> (int x)</td></tr>
 <tr class="separator:ac0958e06bfc57062603761e67765e78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae72cb451287d746ee39c72fe3f9618f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoup_1_1Player.html#ae72cb451287d746ee39c72fe3f9618f1">isInGame</a> () const</td></tr>
+<tr class="memitem:ae72cb451287d746ee39c72fe3f9618f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoup_1_1Player.html#ae72cb451287d746ee39c72fe3f9618f1">getInGame</a> () const</td></tr>
 <tr class="separator:ae72cb451287d746ee39c72fe3f9618f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a238125dbf17c943b6b369856eb37bf74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoup_1_1Player.html#a238125dbf17c943b6b369856eb37bf74">setInGame</a> (bool x)</td></tr>
 <tr class="separator:a238125dbf17c943b6b369856eb37bf74"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,7 +149,7 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a3b3c00f2b0edcc8301a0a1fb20ba2c49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc3e067273ed9dd2dc6d658ece260db8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoup_1_1Player.html#adc3e067273ed9dd2dc6d658ece260db8">sanctionBlocked</a></td></tr>
 <tr class="separator:adc3e067273ed9dd2dc6d658ece260db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7191828e2d2a3a50790d8fb41ca4a78a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcoup_1_1Player.html">Player</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoup_1_1Player.html#a7191828e2d2a3a50790d8fb41ca4a78a">lastBlockedBySanction</a></td></tr>
+<tr class="memitem:a7191828e2d2a3a50790d8fb41ca4a78a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcoup_1_1Player.html">Player</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoup_1_1Player.html#a7191828e2d2a3a50790d8fb41ca4a78a">lastSanctionedTarget</a></td></tr>
 <tr class="separator:a7191828e2d2a3a50790d8fb41ca4a78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5bfdc957128bcbfd1fbad986c50b9b1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcoup_1_1Player.html#aa5bfdc957128bcbfd1fbad986c50b9b1">extraTurns</a></td></tr>
 <tr class="separator:aa5bfdc957128bcbfd1fbad986c50b9b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -378,13 +378,13 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="ae72cb451287d746ee39c72fe3f9618f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae72cb451287d746ee39c72fe3f9618f1">&#9670;&nbsp;</a></span>isInGame()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae72cb451287d746ee39c72fe3f9618f1">&#9670;&nbsp;</a></span>getInGame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool coup::Player::isInGame </td>
+          <td class="memname">bool coup::Player::getInGame </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -720,7 +720,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a7191828e2d2a3a50790d8fb41ca4a78a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7191828e2d2a3a50790d8fb41ca4a78a">&#9670;&nbsp;</a></span>lastBlockedBySanction</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7191828e2d2a3a50790d8fb41ca4a78a">&#9670;&nbsp;</a></span>lastSanctionedTarget</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -729,7 +729,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classcoup_1_1Player.html">Player</a>* coup::Player::lastBlockedBySanction</td>
+          <td class="memname"><a class="el" href="classcoup_1_1Player.html">Player</a>* coup::Player::lastSanctionedTarget</td>
         </tr>
       </table>
   </td>

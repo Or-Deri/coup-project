@@ -36,7 +36,7 @@ var searchData=
   ['isbribeundo_495',['isBribeUndo',['../classcoup_1_1Judge.html#aea0664fdea5904eefb9f0b94d6ac6e91',1,'coup::Judge']]],
   ['iscoupundo_496',['isCoupUndo',['../classcoup_1_1General.html#a4954c69bec388667878e7aa7837831ed',1,'coup::General']]],
   ['isdebuggeractive_497',['isDebuggerActive',['../namespacedoctest_1_1detail.html#a013828c4e677241cc26aeea33f762710',1,'doctest::detail']]],
-  ['isingame_498',['isInGame',['../classcoup_1_1Player.html#ae72cb451287d746ee39c72fe3f9618f1',1,'coup::Player']]],
+  ['isingame_498',['getInGame',['../classcoup_1_1Player.html#ae72cb451287d746ee39c72fe3f9618f1',1,'coup::Player']]],
   ['isnan_499',['IsNaN',['../structdoctest_1_1IsNaN.html',1,'doctest::IsNaN&lt; F &gt;'],['../structdoctest_1_1IsNaN.html#a47f3957c504f7d8bc40dd4014cce5ee1',1,'doctest::IsNaN::IsNaN()']]],
   ['isnan_3c_20double_20_3e_500',['IsNaN&lt; double &gt;',['../namespacedoctest.html#a4084d3d9bcaef83013a4789c1f41666b',1,'doctest']]],
   ['isnan_3c_20float_20_3e_501',['IsNaN&lt; float &gt;',['../namespacedoctest.html#ae635964db555b85aefd7874bc9cc7b51',1,'doctest']]],

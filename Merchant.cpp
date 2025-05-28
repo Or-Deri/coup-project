@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #include "Merchant.hpp"
 #include "Game.hpp"
 #include "Player.hpp"
@@ -11,9 +12,9 @@ namespace coup {
             throw std::runtime_error("It is not your turn");
         }
         //If a player was blocked by sanction in the previous turn, the block is removed
-        if (lastBlockedBySanction != nullptr){  
-            lastBlockedBySanction->setSanctionBlocked(false);
-            lastBlockedBySanction = nullptr;
+        if (lastSanctionedTarget != nullptr){  
+            lastSanctionedTarget->setSanctionBlocked(false);
+            lastSanctionedTarget = nullptr;
         }
 
         if(coins() >= 3){

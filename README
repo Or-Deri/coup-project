@@ -1,0 +1,32 @@
+#orderi429@gmail.com
+This project implements a full version of the Coup board game in C++ using OOP principles. It includes a graphical interface with SFML and unit
+tests using the doctest framework. The game supports 2–6 players, each with a special role and unique abilities. All actions follow the rules
+of the game strictly and invalid moves are blocked or throw exceptions. Memory usage was tested using Valgrind and no leaks were found.
+
+If a player cannot perform an action (due to being blocked or not having enough coins), the button for that action does not appear in the GUI.
+
+The special ability of the Spy is implemented in a way that lets them see all players' coin counts at the start of their
+turn, and choose which player to block from using arrest.
+
+main.cpp runs the game using SFML and allows all players to play on one screen.
+
+Game.cpp and Game.hpp implement the game logic including the players list, the current turn, last action, coin pool, and undo logic.
+
+Player.hpp and Player.cpp define a base Player class with common logic for all roles. Each role inherits from Player and overrides 
+relevant methods to implement its unique behavior.
+
+Roles include Governor, Spy, Baron, General, Judge, and Merchant. Each role class has its own file and logic for its special rules.
+
+PlayerFactory creates players with the correct role.
+
+test.cpp includes unit tests using doctest. The tests check every player role and every game action including invalid cases.
+
+Makefile automates build and test:
+
+    make Main – builds and runs the demo game
+    
+    make test – runs the unit tests
+
+    make valgrind – checks for memory leaks
+
+    make clean – removes compiled files

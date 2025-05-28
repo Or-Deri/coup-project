@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #include "Baron.hpp"
 #include "Game.hpp"
 #include "Player.hpp"
@@ -46,7 +47,6 @@ namespace coup {
         addCoins(1);
 
         setLastTargetArrest(nullptr);
-
         game->setLastAction("gather");
         game->setLastPlayer(this);
     }
@@ -70,5 +70,6 @@ namespace coup {
         setLastTargetArrest(nullptr);
         game->setLastAction("tax");
         game->setLastPlayer(this);
+        game->setLastTarget(this);
     }
 }

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['last_509',['last',['../structdoctest_1_1ContextOptions.html#a5aaf1b28f6a46d8acb40898a502b6bef',1,'doctest::ContextOptions']]],
-  ['lastblockedbysanction_510',['lastBlockedBySanction',['../classcoup_1_1Player.html#a7191828e2d2a3a50790d8fb41ca4a78a',1,'coup::Player']]],
+  ['lastblockedbysanction_510',['lastSanctionedTarget',['../classcoup_1_1Player.html#a7191828e2d2a3a50790d8fb41ca4a78a',1,'coup::Player']]],
   ['lastiblockedarrest_511',['lastIBlockedArrest',['../classcoup_1_1Player.html#aea0dddfeaafae2e4621a70b3dbe45a09',1,'coup::Player']]],
   ['le_512',['le',['../namespacedoctest_1_1detail_1_1binaryAssertComparison.html#a2117cafa5b007d26f2e0988f3a081569a58efccb94f787a00914adc6db077347b',1,'doctest::detail::binaryAssertComparison']]],
   ['lightgrey_513',['LightGrey',['../namespacedoctest_1_1Color.html#a32e9eaf6013139846e848af6e6cf2b92a44f079a43a4709abd7d6f22b317838a2',1,'doctest::Color']]],

@@ -15,7 +15,7 @@ var searchData=
   ['getlastplayer_983',['getLastPlayer',['../classcoup_1_1Game.html#a6ff7e4aead9d29f8a4bd6f4fb98bd463',1,'coup::Game']]],
   ['getlasttarget_984',['getLastTarget',['../classcoup_1_1Game.html#a3265f651c838ed4eb3d2c038213f224a',1,'coup::Game']]],
   ['getname_985',['getName',['../classcoup_1_1Player.html#a55d2ac7185afd9b49bff53174de34ef9',1,'coup::Player']]],
-  ['getplaerslist_986',['getPlaersList',['../classcoup_1_1Game.html#a31bdcee41b55718729ca9971ce2dc254',1,'coup::Game']]],
+  ['getplaerslist_986',['getPlayersList',['../classcoup_1_1Game.html#a31bdcee41b55718729ca9971ce2dc254',1,'coup::Game']]],
   ['givebonus_987',['giveBonus',['../classcoup_1_1Merchant.html#a1bc5cb68e6ceaf1e0f19966683e67657',1,'coup::Merchant']]],
   ['governor_988',['Governor',['../classcoup_1_1Governor.html#afce14c067ee364511c8cc45419944b9e',1,'coup::Governor']]]
 ];

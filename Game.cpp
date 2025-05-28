@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #include "Game.hpp"
 #include "Player.hpp"
 #include <stdexcept>
@@ -17,17 +18,21 @@ namespace coup {
 
     }
 
-
-
     void Game::addPlayer(Player* p){
         
         if(playersList.size() >= 6) {
             throw std::runtime_error("Maximum 6 players in game");
         }
+        
+        for (auto* existing : playersList) {
+            if (existing->getName() == p->getName()) {
+                throw std::runtime_error("Player name '" + p->getName() + "' already exists");
+            }
+        }
         playersList.push_back(p);
     }
 
-    std::vector<Player*> Game::getPlaersList(){
+    std::vector<Player*> Game::getPlayersList(){
         return playersList;
     }
     
@@ -51,7 +56,6 @@ namespace coup {
         lastTarget = p;
     }
 
-
     Player* Game::currentPlayer(){
         return playersList.at(playerTurn);
     }
@@ -66,22 +70,20 @@ namespace coup {
             current->startTurn();
             return;
         }
-
-
-        int start = playerTurn;
-        playerTurn = (playerTurn + 1) % players().size();
-
-        while(!playersList.at(playerTurn)->isInGame()){
-
-            playerTurn = (playerTurn + 1) % players().size();
-            
-            if(start == playerTurn){
-                throw std::runtime_error("No active players");
+    
+        int n = playersList.size();
+    
+        for (int step = 1; step <= n; ++step) {
+            int idx = (playerTurn + step) % n;
+            if (playersList[idx]->getInGame()) {
+                playerTurn = idx;
+                playersList[playerTurn]->startTurn();
+                return;
             }
         }
-
-        playersList.at(playerTurn)->startTurn();
+        throw std::runtime_error("No active players");
     }
+
 
 
     std::string Game::turn(){
@@ -94,7 +96,7 @@ namespace coup {
         std::vector <std::string> names;
         for(Player* p : playersList){
             
-            if(p->isInGame()){
+            if(p->getInGame()){
                 names.push_back(p->getName());
             }
         }
@@ -110,7 +112,7 @@ namespace coup {
         
         for(Player* p : playersList) {
             
-            if(p->isInGame()){
+            if(p->getInGame()){
                 last = p->getName();
                 break;
             }
@@ -121,7 +123,7 @@ namespace coup {
     int Game::playersInTheGame(){
         int ans = 0;
         for(Player* p : playersList){    
-            if(p->isInGame()){
+            if(p->getInGame()){
                 ans++;
             }
         }

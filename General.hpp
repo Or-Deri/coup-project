@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #pragma once
 #include "Player.hpp"
 
@@ -5,13 +6,8 @@ namespace coup {
 
     class General : public Player {
     
-    private:
-        //bool undoTheCoup = false;
-    
     public:
         General(Game& game, const std::string& name);
-        //bool isCoupUndo() const;
-        //void setUndo(bool x);
         
         /**
         * @brief Undoes a coup action performed on a target player, restoring them to the game.
@@ -23,7 +19,8 @@ namespace coup {
         * @throws std::runtime_error If the target does not match the last coup target.
         * @throws std::runtime_error If the General does not have at least 5 coins.
         */
-        void undo(Player& target); 
+        void undo(Player& target);
+         
     };
 
 }

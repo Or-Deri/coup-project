@@ -8,5 +8,5 @@ digraph "coup::Spy"
   Node2 [label="coup::Player",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcoup_1_1Player.html",tooltip=" "];
   Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" game" ,fontname="Helvetica"];
   Node3 [label="coup::Game",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcoup_1_1Game.html",tooltip=" "];
-  Node2 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" lastBlockedBySanction\nlastIBlockedArrest" ,fontname="Helvetica"];
+  Node2 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" lastSanctionedTarget\nlastIBlockedArrest" ,fontname="Helvetica"];
 }

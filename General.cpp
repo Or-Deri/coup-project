@@ -1,3 +1,4 @@
+//orderi429@gmail.com
 #include "General.hpp"
 #include "Game.hpp"
 #include <stdexcept>
@@ -6,9 +7,7 @@
 
 namespace coup {
 
-    General::General(Game& game, const std::string& name)  :Player(game, name){
-        //undoTheCoup = false;
-    }
+    General::General(Game& game, const std::string& name)  :Player(game, name){}
 
     void General::undo(Player& target){
 
@@ -22,6 +21,10 @@ namespace coup {
             throw std::runtime_error("The target player is incorrect");
         }
         
+        if(!this->getInGame() && this != &target){               
+            throw std::runtime_error("A General who has left the game cannot undo coup");
+        }
+
         if (coins() < 5){
             throw std::runtime_error ("Not enough coins");
         }
@@ -29,16 +32,9 @@ namespace coup {
         subCoins(5);
 
         target.setInGame(true);
-        //undoTheCoup = false;
         game->setLastAction("");
         game->setLastPlayer(nullptr);
     }
 
-    // bool General::isCoupUndo ()const {
-    //     return undoTheCoup;
-    // }
-        
-    // void General::setUndo(bool x){
-    //     undoTheCoup = x;
-    // }
+
 }
