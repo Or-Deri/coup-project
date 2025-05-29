@@ -55,7 +55,8 @@ int main() {
     sf::Font font = loadFont();
 
     enum Screen { MENU, NAME_INPUT, GAME, SELECT_TARGET, UNDO_PROMPT ,WINNER_SCREEN } screen = MENU;
-    string currentInput, pendingAction;
+    string  pendingAction;
+    sf::String currentInput;
     Player* lastActor = nullptr;
     Player* undoResponder = nullptr;
 
@@ -122,19 +123,23 @@ int main() {
                 window.close();
 
             if (screen == NAME_INPUT && event.type == sf::Event::TextEntered) {
-                if (event.text.unicode == 8 && !currentInput.empty()) {
-                    currentInput.pop_back();
-                } else if (event.text.unicode == '\n' || event.text.unicode == '\r') {
-                    if (!currentInput.empty()) {
-                        Player* p = PlayerFactory::createRandomPlayer(game, currentInput);
-                        players.push_back(unique_ptr<Player>(p));
+                if (event.text.unicode == 8) {           
+                    if (!currentInput.isEmpty())
+                        currentInput.erase(currentInput.getSize()-1, 1);
+                }
+                else if (event.text.unicode == '\n'
+                    || event.text.unicode == '\r') {      
+                    if (!currentInput.isEmpty()) {
+                        auto* p = PlayerFactory::createRandomPlayer(game, currentInput);
+                        players.push_back(std::unique_ptr<Player>(p));
                     }
                     currentInput.clear();
                     screen = MENU;
-    
-                } else if (event.text.unicode >= 32) {
-                    currentInput += static_cast<char>(event.text.unicode);
                 }
+                else if (event.text.unicode >= 32) {         
+                    currentInput += event.text.unicode;
+                }
+                inputText.setString(currentInput);
                 continue;
             }
 
@@ -145,12 +150,6 @@ int main() {
                     continue;
                 } else if (startBtn.getGlobalBounds().contains(mouse) && players.size() >= 2) {
                     if (!game.players().empty()) {
-                        //std::cout << "[DEBUG] Game players in memory after start:" << std::endl;
-                        for (Player* p : game.getPlayersList()) { 
-                            //std::cout << " - " << p->getName() << " | addr: " << p;
-                            if (dynamic_cast<Judge*>(p)){} //std::cout << " [JUDGE]";
-                            //std::cout << std::endl;
-                        }
                         screen = GAME;
                         game.currentPlayer()->startTurn();
                         continue;
@@ -167,7 +166,7 @@ int main() {
                     if (auto* g = dynamic_cast<General*>(undoResponder)){
                         try{
                             g->undo(*game.getLastTarget());
-                            //std::cout << g->getName() << " undo the coup " <<std::endl;
+                            std::cout << g->getName() << " undo the coup " <<std::endl;
 
                             game.nextTurn();
                             pendingUndoResponders.clear();
@@ -184,7 +183,7 @@ int main() {
                     else if (auto* gov = dynamic_cast<Governor*>(undoResponder)){
                         try{
                             gov->undo(*game.getLastTarget());
-                            //std::cout << gov->getName() << " undo the tax " <<std::endl;
+                            std::cout << gov->getName() << " undo the tax " <<std::endl;
 
                             game.nextTurn();
                             screen = GAME;
@@ -200,11 +199,8 @@ int main() {
                     }
                     else if (auto* j = dynamic_cast<Judge*>(undoResponder)){ 
                         try{
-                            //std::cout << "[DEBUG] Judge clicked yes" << std::endl;
-                            
-                            
                             j->undo(*game.getLastTarget());
-                            //std::cout << j->getName() << " undo the bribe " <<std::endl;
+                            std::cout << j->getName() << " undo the bribe " <<std::endl;
                             game.nextTurn();
                             
                             screen = GAME;
@@ -257,7 +253,7 @@ int main() {
                         try {
                             if (pendingAction == "coup") {
                                 current->coup(*chosen);
-                                //std::cout << current->getName() <<" make coup on " << chosen->getName() << "\n";
+                                std::cout << current->getName() <<" make coup on " << chosen->getName() << "\n";
 
                                 std::vector<Player*> generals;
                                 for (auto& p : players) {
@@ -281,13 +277,13 @@ int main() {
 
                                 if(chosen != game.currentPlayer()->getLastTargetArrest()){
                                     current->arrest(*chosen);
-                                    //std::cout << current->getName() <<" make arrest on " << chosen->getName() << "\n";
+                                    std::cout << current->getName() <<" make arrest on " << chosen->getName() << "\n";
                                     game.nextTurn();
                                     screen = GAME;
                                     continue;
                                 }
                                 else{
-                                    std::cerr << "[ERROR] You can't arrest the same player twice in a row" << std::endl;
+                                    std::cerr << "ERROR: You can't arrest the same player twice in a row" << std::endl;
                                     screen = GAME;
                                     pendingAction = "";
                                 }
@@ -295,7 +291,7 @@ int main() {
                             }
                             else if (pendingAction == "sanction") {
                                 current->sanction(*chosen);
-                                //std::cout << current->getName() <<" make sanction on " << chosen->getName() << "\n";
+                                std::cout << current->getName() <<" make sanction on " << chosen->getName() << "\n";
                                 game.nextTurn(); 
                                 screen = GAME;
                                 continue;
@@ -303,19 +299,16 @@ int main() {
                             else if (pendingAction == "block arrest") {
                                 if (auto* s = dynamic_cast<Spy*>(current)) {
                                     s->blockArrest(*chosen);
-                                    //std::cout << current->getName() <<" make block arrest on " << chosen->getName() << "\n";
+                                    std::cout << current->getName() <<" make block arrest on " << chosen->getName() << "\n";
                                     game.nextTurn();
                                     screen = GAME;
                                     continue;
                                 }
-
-
                             }
-
-                        
                             if (screen != UNDO_PROMPT) {
                                 screen = GAME;
                             }
+
                         } catch (std::exception& e) {
                             std::cerr << "Error: " << e.what() << std::endl;
                             game.nextTurn(); 
@@ -332,20 +325,16 @@ int main() {
                 for (size_t i = 0; i < actionButtons.size(); ++i) {
                     if (actionButtons[i].getGlobalBounds().contains(mouse)) {
                         string action = actions[i];
-                        //std::cout << "Clicked on action: " << action << std::endl;
                         Player* current = game.currentPlayer();
                         try {
                             if (action == "gather"){
                                 current->gather();
-                                //std::cout << current->getName() << " make gather " <<std::endl;
-
+                                std::cout << current->getName() << " make gather " <<std::endl;
                                 game.nextTurn();
                                 continue;
                             }
                             else if (action == "tax") {
                                 current->tax();
-
-
                                 std::vector<Player*> governors;
                                 for (auto& p : players) {
                                     if (p.get() != current && dynamic_cast<Governor*>(p.get()) && p.get()->getInGame()) {
@@ -382,14 +371,12 @@ int main() {
                                     game.nextTurn();
                                     continue;
                                 }
-
-                                //std::cout << current->getName() << " make bribe " <<std::endl;
+                                std::cout << current->getName() << " make bribe " <<std::endl;
                             }
                             else if (action == "invest") {
                                 if (auto* b = dynamic_cast<Baron*>(current)){
                                     b->invest();
-                                    //std::cout << current->getName() << " make invest " <<std::endl;
-
+                                    std::cout << current->getName() << " make invest " <<std::endl;
                                     game.nextTurn();
                                     continue;
                                 }
@@ -419,13 +406,13 @@ int main() {
                                         targetRefs.push_back(p.get());
                                     }
                                 }
-                                //std::cout << "Targets found: " << targetRefs.size() << std::endl;
+                                
                                 if (targetRefs.empty()) {
                                     std::cerr << "No valid targets for action: " << action << std::endl;                                    
                                     screen = GAME;
                                     continue;
                                 } else {
-                                    //std::cout << "[DEBUG] switching to SELECT_TARGET for " << action << std::endl;
+                                
                                     screen = SELECT_TARGET;
                                     continue;
 
