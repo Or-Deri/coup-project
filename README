@@ -15,7 +15,7 @@ Game.cpp and Game.hpp implement the game logic including the players list, the c
 Player.hpp and Player.cpp define a base Player class with common logic for all roles. Each role inherits from Player and overrides 
 relevant methods to implement its unique behavior.
 
-Roles include Governor, Spy, Baron, General, Judge, and Merchant. Each role class has its own file and logic for its special rules.
+Roles include Goבernor, Spy, Baron, General, Judge, and Merchant. Each role class has its own file and logic for its special rules.
 
 PlayerFactory creates players with the correct role.
 

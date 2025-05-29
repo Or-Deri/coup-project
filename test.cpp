@@ -9,6 +9,7 @@
 #include "Spy.hpp"
 #include "Baron.hpp"
 #include "Merchant.hpp"
+#include "PlayerFactory.hpp"
 
 using namespace coup;
 
@@ -566,4 +567,14 @@ TEST_CASE("Playre With 10 or more coins  make action that is not copu") {
     CHECK_THROWS(baron.arrest(spy));
     CHECK_THROWS(baron.sanction(spy));
     CHECK_THROWS(baron.invest());
+}
+
+TEST_CASE("PlayerFactory returns valid class") {
+    Game game;
+    Player* p = PlayerFactory::createRandomPlayer(game, "player");
+
+    bool x = (dynamic_cast<Governor*>(p)  || dynamic_cast<General*>(p) ||dynamic_cast<Judge*>(p) ||
+                dynamic_cast<Spy*>(p)     ||    dynamic_cast<Baron*>(p)     || dynamic_cast<Merchant*>(p));
+
+    CHECK(x);
 }

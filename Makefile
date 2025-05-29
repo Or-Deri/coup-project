@@ -21,7 +21,7 @@ test: $(SRC_TEST)
 valgrind_main: Main
 	valgrind --leak-check=full --track-origins=yes ./main
 
-valgrind_test: gui
+valgrind_gui: gui
 	valgrind --leak-check=full --track-origins=yes ./gui
 
 valgrind_test: test

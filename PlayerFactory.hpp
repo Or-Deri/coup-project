@@ -9,9 +9,6 @@ namespace coup {
 
     class PlayerFactory {
     public:
-        
-        static Player* createPlayer(Game& game,const std::string& name, const std::string& roleName);
-
         /**
         * @brief Creates a new player with a random role. 
         * This method randomly selects one of the six available roles and returns

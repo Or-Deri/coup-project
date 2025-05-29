@@ -17,25 +17,6 @@
 
 namespace coup {
 
-    //אולי למחוק 
-    Player* PlayerFactory::createPlayer(Game& game,const std::string& name, const std::string& roleName) {
-        if (roleName == "Governor") {
-            return new Governor(game, name);
-        } else if (roleName == "General") {
-            return new General(game, name);
-        } else if (roleName == "Judge") {
-            return new Judge(game, name);
-        } else if (roleName == "Spy") {
-            return new Spy(game, name);
-        } else if (roleName == "Baron") {
-            return new Baron(game, name);;
-        } else if (roleName == "Merchant") {
-            return new Merchant(game, name);
-        } else {
-            throw std::invalid_argument("Unknown role");
-        }
-    }
-
     Player* PlayerFactory::createRandomPlayer(Game& game, const std::string& name) {
         static std::random_device rd;
         static std::mt19937 gen(rd());
